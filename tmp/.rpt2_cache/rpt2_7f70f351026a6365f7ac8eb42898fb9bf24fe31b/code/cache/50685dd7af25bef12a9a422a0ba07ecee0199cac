@@ -1,1 +1,0 @@
-{"code":"/**\r\n * @Description : portal eventName\r\n * @Create on : 2019/11/18 22:03\r\n * @author liuyunjs\r\n * @version 0.0.1\r\n **/\r\nexport var ADD_PORTAL = '___@@add_portal@@___';\r\nexport var REMOVE_PORTAL = '___@@@remove_portal@___';\r\n","references":[]}
