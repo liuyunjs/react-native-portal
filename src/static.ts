@@ -4,7 +4,7 @@
  * @author liuyunjs
  * @version 0.0.1
  **/
-import React from 'react';
+import * as React from 'react';
 import action from './action';
 
 export default class {

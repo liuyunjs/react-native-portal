@@ -14,8 +14,8 @@ export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
   const staticAction = new StaticAction();
 
   return class Portal extends React.PureComponent<PortalProps & T> {
-    private key?: string;
-    private child: React.RefObject<ComponentType<T>> = React.createRef();
+    portalKey?: string;
+    child: React.RefObject<ComponentType<T>> = React.createRef();
 
     // static show(component: React.ReactNode): string {
     //   return staticAction.show(
@@ -45,13 +45,13 @@ export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
     }
 
     componentWillUnmount() {
-      this.key && staticAction.hide(this.key);
+      this.portalKey && staticAction.hide(this.portalKey);
     }
 
     close = () => this.child.current && (this.child.current as any).close && (this.child.current as any).close();
 
-    private show() {
-      this.key = staticAction.show(
+    show() {
+      this.portalKey = staticAction.show(
         (
           <Component
             {...this.props}
@@ -62,10 +62,10 @@ export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
       );
     }
 
-    private onChange = (visible: boolean) => {
+    onChange = (visible: boolean) => {
       if (!visible) {
-        this.key && staticAction.hide(this.key);
-        this.key = undefined;
+        this.portalKey && staticAction.hide(this.portalKey);
+        this.portalKey = undefined;
       }
 
       const {onChange} = this.props;

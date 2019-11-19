@@ -60,3 +60,4 @@ buck-out/
 
 dist/
 tmp/
+lib/

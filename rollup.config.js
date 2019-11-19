@@ -7,6 +7,7 @@
 
 import typescript from 'rollup-plugin-typescript2';
 import replace from 'rollup-plugin-replace';
+import resolve from 'rollup-plugin-node-resolve';
 import pkg from './package.json';
 
 const typescriptConfig = {
@@ -30,21 +31,35 @@ const deps = Object.keys(pkg.dependencies || {});
 const peerDeps = Object.keys(pkg.peerDependencies || {});
 
 const config = {
-  input: 'index.ts',
+  input: 'src/index.ts',
   external: makeExternalPredicate(deps.concat(peerDeps))
 };
 
-export default (Object.assign({}, config, {
+const es = (Object.assign({}, config, {
   output: {
     file: pkg.main,
     format: 'es',
     exports: 'named'
   },
   plugins: [
-    typescript(noDeclarationConfig),
+    resolve(),
+    typescript(typescriptConfig),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
   ]
 }));
 
+const cjs = Object.assign({}, config, {
+  output: {
+    file: pkg.main,
+    format: 'cjs',
+    exports: 'named'
+  },
+  plugins: [
+    resolve(),
+    typescript(typescriptConfig)
+  ]
+});
+
+export default [es]
