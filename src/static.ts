@@ -5,32 +5,51 @@
  * @version 0.0.1
  **/
 import * as React from 'react';
-import action from './action';
+import RootSibings from 'react-native-root-siblings';
+import findIndex from 'lodash/findIndex';
+import {Portal} from './types';
 
 export default class {
-  private portalCache: string[] = [];
+  private portalCache: Portal[] = [];
 
   show(element: React.ReactElement, key?: string): string {
-    const k = action.add(element, key);
+    const k = key || Math.random().toString(36).slice(2);
 
-    const index = this.portalCache.indexOf(k);
-
-    if (index !== -1) {
-      this.portalCache.splice(index, 1, k);
-    } else {
-      this.portalCache.push(k);
+    for (let item of this.portalCache) {
+      if (k === item.key) {
+        item.sibings.update(element);
+        return k;
+      }
     }
+
+    this.portalCache.push({
+      key: k,
+      sibings: new RootSibings(element),
+    });
 
     return k;
   }
 
-  hide(key?: string) {
-    if (!key) {
-      key = this.portalCache[this.portalCache.length - 1];
+  update(element: React.ReactElement, key?: string) {
+    const index = this.getIndex(key);
+
+    if (index === undefined) {
+      return;
     }
 
-    this.portalCache = this.portalCache.filter(i => i !== key);
-    action.remove(key);
+    this.portalCache[index!].sibings.update(element);
+  }
+
+  hide(key?: string) {
+    const index = this.getIndex(key);
+
+    if (index === undefined) {
+      return;
+    }
+
+    this.portalCache[index!].sibings.destroy();
+
+    this.portalCache.splice(index!, 1);
   }
 
   hideAll() {
@@ -40,5 +59,24 @@ export default class {
         break;
       }
     }
+  }
+
+  private getIndex(key?: string): number | undefined {
+    const len = this.portalCache.length;
+    if (!len) {
+      return;
+    }
+
+    let index: number;
+    if (key) {
+      const index = findIndex(this.portalCache, (i) => i.key === key);
+      if (index === -1) {
+        return;
+      }
+    } else {
+      index = len - 1;
+    }
+
+    return index!;
   }
 }

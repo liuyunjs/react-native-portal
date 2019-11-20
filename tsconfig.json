@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "es5",
+    "target": "esnext",
     "resolveJsonModule": true,
     "declaration": true,
     "rootDir": "./",

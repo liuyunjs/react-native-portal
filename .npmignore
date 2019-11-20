@@ -4,3 +4,5 @@ ios
 android
 *.lock
 node_modules
+index.ts
+App.tsx

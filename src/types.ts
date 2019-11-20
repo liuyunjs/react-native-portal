@@ -4,23 +4,17 @@
  * @author liuyunjs
  * @version 0.0.1
  **/
-
 import * as React from 'react';
+import RootSibings from 'react-native-root-siblings';
 
-export type AddAction = {
+
+export type Portal = {
   key: string,
-  element: React.ReactElement
-}
-
-export type State = {
-  portalList: AddAction[],
+  sibings: RootSibings,
 }
 
 export type PortalProps = {
   onChange?: (visible: boolean) => any,
   visible?: boolean,
+  forwardRef?: React.Ref<any>,
 }
-
-// export interface BaseProps {
-//   children?: React.ReactNode,
-// }

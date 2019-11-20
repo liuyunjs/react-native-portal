@@ -7,58 +7,68 @@
 
 import * as React from 'react';
 import {ComponentType} from 'react';
+import hoistStatics from 'hoist-non-react-statics'
 import StaticAction from './static';
 import {PortalProps} from './types';
 
 export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
   const staticAction = new StaticAction();
 
-  return class Portal extends React.PureComponent<PortalProps & T> {
+  class Portal extends React.PureComponent<PortalProps & T> {
     portalKey?: string;
-    child: React.RefObject<ComponentType<T>> = React.createRef();
 
-    // static show(component: React.ReactNode): string {
-    //   return staticAction.show(
-    //     <Component>
-    //       {component}
-    //     </Component>,
-    //   );
-    // }
+    static WrappedComponent = Component;
+    static displayName = Component.displayName || Component.name || 'Component';
 
-    static hide() {
-      staticAction.hide();
+    static show(children: React.ReactElement, onClose?: () => any): string {
+      const props = {
+        children,
+        visible: true,
+        onChange(visible: boolean) {
+          if (!visible) {
+            staticAction.hide(key);
+            onClose && onClose();
+          }
+        }
+      } as any;
+
+      const key = staticAction.show(
+        <Component {...props} />,
+      );
+
+      return key;
+    }
+
+    static hide(key?: string) {
+      staticAction.hide(key);
+    }
+
+    static hideAll() {
+      staticAction.hideAll();
     }
 
     componentDidMount() {
-      if (this.props.visible) {
-        this.show();
-      }
+      this.show();
     }
 
     componentDidUpdate(prevProps: PortalProps & T) {
-      if (prevProps.visible !== this.props.visible) {
-        if (this.props.visible) {
-          return this.show();
-        }
-        this.close();
-      }
+      this.show();
     }
 
     componentWillUnmount() {
       this.portalKey && staticAction.hide(this.portalKey);
     }
 
-    close = () => this.child.current && (this.child.current as any).close && (this.child.current as any).close();
-
     show() {
       this.portalKey = staticAction.show(
         (
           <Component
             {...this.props}
-            ref={this.child}
+            ref={this.props.forwardRef}
             onChange={this.onChange}
           />
         ),
+        this.portalKey,
       );
     }
 
@@ -76,4 +86,10 @@ export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
       return null;
     }
   }
+
+  const ForwardRef = React.forwardRef((props: any, ref) => (
+    <Portal {...props} forwardRef={ref} />
+  ));
+
+  return hoistStatics(ForwardRef, Component);
 }
