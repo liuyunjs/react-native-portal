@@ -69,7 +69,7 @@ export default class {
 
     let index: number;
     if (key) {
-      const index = findIndex(this.portalCache, (i) => i.key === key);
+      index = findIndex(this.portalCache, (i) => i.key === key);
       if (index === -1) {
         return;
       }

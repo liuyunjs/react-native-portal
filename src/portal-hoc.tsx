@@ -87,9 +87,5 @@ export default function portalHOC<T extends {}>(Component: ComponentType<T>) {
     }
   }
 
-  const ForwardRef = React.forwardRef((props: any, ref) => (
-    <Portal {...props} forwardRef={ref} />
-  ));
-
-  return hoistStatics(ForwardRef, Component);
+  return hoistStatics(Portal, Component) as ComponentType<T>;
 }

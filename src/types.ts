@@ -17,4 +17,5 @@ export type PortalProps = {
   onChange?: (visible: boolean) => any,
   visible?: boolean,
   forwardRef?: React.Ref<any>,
+  onClose?: () => any,
 }
