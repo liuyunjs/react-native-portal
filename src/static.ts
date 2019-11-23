@@ -6,77 +6,123 @@
  **/
 import * as React from 'react';
 import RootSibings from 'react-native-root-siblings';
-import findIndex from 'lodash/findIndex';
-import {Portal} from './types';
+import {PortalCache} from './types';
 
+/**
+ * 在 react-native-root-siblings 的基础之上封装自己的一些逻辑
+ * 已字符串对每个渲染的内容进行标识
+ * 在销毁内容的时候可以传入 key 销毁指定内容，不传入的时候默认取最后一个渲染的 key
+ *
+ * 支持一次性销毁所有内容
+ */
 export default class {
-  private portalCache: Portal[] = [];
+  // 缓存
+  private portalCache: PortalCache = {};
 
+  /**
+   * 渲染一些内容到跟节点
+   * 如果是已经存在的内容，则更新内容
+   * @param element
+   * @param key
+   */
   show(element: React.ReactElement, key?: string): string {
-    const k = key || Math.random().toString(36).slice(2);
+    const k = key || this.createKey();
 
-    for (let item of this.portalCache) {
-      if (k === item.key) {
-        item.sibings.update(element);
-        return k;
-      }
+    const cacheKey = `.${k}`;
+
+    if (this.portalCache[cacheKey]) {
+      this.portalCache[cacheKey].sibings.update(element);
+    } else {
+      this.portalCache[cacheKey] = {
+        element,
+        sibings: new RootSibings(element),
+      };
     }
-
-    this.portalCache.push({
-      key: k,
-      sibings: new RootSibings(element),
-    });
 
     return k;
   }
 
+  /**
+   * 更新指定内容
+   * @param element
+   * @param key
+   */
   update(element: React.ReactElement, key?: string) {
-    const index = this.getIndex(key);
-
-    if (index === undefined) {
-      return;
-    }
-
-    this.portalCache[index!].sibings.update(element);
+    const k = this.getKey(key);
+    k && this.portalCache[k].sibings.update(element);
   }
 
+  /**
+   * 销毁内容
+   * @param key
+   */
   hide(key?: string) {
-    const index = this.getIndex(key);
+    const k = this.getKey(key);
 
-    if (index === undefined) {
+    if (!k) {
       return;
     }
 
-    this.portalCache[index!].sibings.destroy();
+    this.portalCache[k].sibings.destroy();
 
-    this.portalCache.splice(index!, 1);
+    delete this.portalCache[k];
   }
 
+  /**
+   * 销毁所有
+   */
   hideAll() {
     while (true) {
       this.hide();
-      if (!this.portalCache.length) {
+      const keys = Object.keys(this.portalCache);
+      const len = keys.length;
+      if (!len) {
         break;
       }
     }
   }
 
-  private getIndex(key?: string): number | undefined {
-    const len = this.portalCache.length;
+  /**
+   * 获取对应的key
+   * 如果未传入指定 key，则取缓存中最后渲染的一个
+   * 如果返回 false 则不存在 key 对应的缓存组件
+   * @param key
+   */
+  getKey(key?: string) {
+    const keys = Object.keys(this.portalCache);
+    const len = keys.length;
+
     if (!len) {
-      return;
+      return false;
     }
 
-    let index: number;
-    if (key) {
-      index = findIndex(this.portalCache, (i) => i.key === key);
-      if (index === -1) {
-        return;
-      }
-    } else {
-      index = len - 1;
+    if (key == null) {
+      key = keys[len - 1].slice(1);
     }
 
-    return index!;
+    const cacheKey = `.${key}`;
+    if (!this.portalCache[cacheKey]) {
+      return false;
+    }
+
+    return cacheKey;
+  }
+
+  /**
+   * 创建一个不跟缓存中已有的 key 重复的 key
+   */
+  private createKey(): string {
+    const key = Math.random().toString(36).slice(2);
+    if (this.portalCache[key]) {
+      return this.createKey();
+    }
+    return key;
+  }
+
+  /**
+   * 获取缓存内容
+   */
+  get caches(): PortalCache {
+    return this.portalCache;
   }
 }

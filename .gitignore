@@ -64,3 +64,6 @@ lib/
 
 index.ts
 App.tsx
+
+ios
+android

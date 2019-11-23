@@ -7,15 +7,18 @@
 import * as React from 'react';
 import RootSibings from 'react-native-root-siblings';
 
-
-export type Portal = {
-  key: string,
-  sibings: RootSibings,
+export type PortalProps = {
+  // 状态改变监听器
+  onChange?: (visible: boolean) => any,
+  // 控制状态是否需要改变
+  visible?: boolean,
+  // 是否需要在关闭后销毁
+  ifHideDestroy?: boolean,
 }
 
-export type PortalProps = {
-  onChange?: (visible: boolean) => any,
-  visible?: boolean,
-  forwardRef?: React.Ref<any>,
-  onClose?: () => any,
+export type PortalCache = {
+  [key: string]: {
+    element: React.ReactElement,
+    sibings: RootSibings
+  },
 }
