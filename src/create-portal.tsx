@@ -147,10 +147,10 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
     // 隐藏被包装组件
     hide,
     // 更新被包装组件
-    update: action.update,
+    update: action.update.bind(action),
     // 销毁所有被包装组件
-    destroyAll: action.hideAll,
+    destroyAll: action.hideAll.bind(action),
     // 销毁
-    destroy: action.hide,
+    destroy: action.hide.bind(action),
   };
 }
