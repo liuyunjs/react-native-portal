@@ -2,7 +2,7 @@
  * @Description : portal creator
  * @Create on : 2019/11/20 22:52
  * @author liuyunjs
- * @version 0.0.1
+ * @version 0.0.12
  **/
 
 import * as React from 'react';
@@ -10,7 +10,7 @@ import hoistStatics from 'hoist-non-react-statics';
 import StaticAction from './static';
 import {PortalProps} from './types';
 
-const staticDefaultProps: PortalProps & {key?: string} = {
+const staticDefaultProps: PortalProps = {
   ifHideDestroy: true,
 };
 
@@ -33,10 +33,10 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
    * @param children
    * @param props
    */
-  function show(children: React.ReactElement, props?: T & PortalProps & {key?: string}): string {
+  function show(children: React.ReactElement, props?: T & PortalProps): string {
     const opts = {...staticDefaultProps, ...props};
-    let {key} = opts ;
-    delete opts.key;
+    let {id} = opts ;
+    delete opts.id;
     // 合成props
     const p = {
       ...opts,
@@ -44,9 +44,15 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
       visible: true,
       onChange(visible: boolean) {
 
-        // 在内容关闭之后，并且需要在关闭之后销毁内容，调用销毁方法
-        if (!visible && opts.ifHideDestroy) {
-          action.hide(key);
+        // 在内容关闭之后，
+        if (!visible) {
+          // 需要在关闭之后销毁内容，调用销毁方法
+          if (opts.ifHideDestroy) {
+            action.hide(key);
+          } else {
+            // 否则尝试隐藏模态框
+            hide(key);
+          }
         }
 
         if (opts.onChange) {
@@ -56,8 +62,7 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
     } as any;
 
     // 显示内容
-    key = action.show(<Component {...p} />, key);
-
+    const key = action.show(<Component {...p} />, id);
     return key;
   }
 
@@ -73,7 +78,11 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
     }
 
     const target = action.caches[k];
-    target.sibings.update(React.cloneElement(target.element, {visible: false}));
+    // 如果当前被包装组件的 visible props 是 true， 则代表是显示状态
+    // 更新为 false 隐藏状态
+    if (target.element.props.visible) {
+      target.sibings.update(React.cloneElement(target.element, {visible: false}));
+    }
   }
 
   class Portal extends React.PureComponent<PortalProps & T> {
@@ -123,8 +132,8 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
 
     onChange = (visible: boolean) => {
       // 当被包装组件关闭后，如果需要在关闭时销毁组件，执行销毁逻辑
-      if (!visible && this.props.ifHideDestroy) {
-        this.portalKey && action.hide(this.portalKey);
+      if (!visible && this.props.ifHideDestroy && this.portalKey) {
+        action.hide(this.portalKey);
         this.portalKey = undefined;
       }
 

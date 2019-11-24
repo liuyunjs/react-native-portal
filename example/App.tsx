@@ -6,91 +6,83 @@
  **/
 
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text} from 'react-native';
 import {createPortal} from 'react-native-portal-view';
+import Modal from './src/components/modal';
 
-class Modal2 extends React.PureComponent<any, any> {
-  constructor(props: any) {
-    super(props);
+const portalModal = createPortal(Modal);
 
-    this.state = {
-      visible: props.visible,
-      visibleProps: props.visible,
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    if (prevState.visibleProps !== nextProps.visible) {
-      return {
-        visible: nextProps.visible,
-        visibleProps: nextProps.visible,
-      };
-    }
-
-    return null;
-  }
-
-
-  componentDidMount() {
-  }
-
-  componentDidUpdate(prevProps: any, prevState: any) {
-    if (prevState.visible !== this.state.visible) {
-      this.props.onChange(this.state.visible);
-    }
-  }
-
-  render() {
-    const v = (this.props as any).visible;
-    return v ? (
-      <View style={[StyleSheet.absoluteFillObject, {
-        height: 300,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'red'
-      }]}>
-        <Text onPress={() => this.setState({visible: false})}>
-          close modal
-        </Text>
-        {this.props.children}
-      </View>
-    ) : null
-  }
-}
-
-const Modal = createPortal(Modal2);
-const ModalComponent = Modal.Component;
+const PortalModal = portalModal.Component;
 
 export default class App extends React.PureComponent {
   state = {
     visible: false,
   };
 
+  private key?: string;
+
+  ifHideDestroy: boolean = false;
+
+  componentWillUnmount() {
+    if (!this.ifHideDestroy && this.key) {
+      portalModal.hide(this.key);
+    }
+  }
+
+  private onChange = (visible: boolean) => this.setState({visible});
+
+  private close = () => this.onChange(false);
+
+  private open = () => this.onChange(true);
+
+  private closeUseStaticFunction = () => portalModal.hide();
+
+  private openUseStaticFunction = () => {
+    this.key = portalModal.show(
+      this.getModalChildren(),
+      {
+        key: this.key,
+        ifHideDestroy: this.ifHideDestroy,
+      },
+    )
+  };
+
+  private getModalChildren() {
+    return (
+      <>
+        <View>
+          <Text onPress={this.close}>
+            close use setState
+          </Text>
+        </View>
+        <View>
+          <Text onPress={this.closeUseStaticFunction}>
+            close use static
+          </Text>
+        </View>
+      </>
+    )
+  }
+
   render() {
 
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <ModalComponent ifHideDestroy={false} onChange={(visible: boolean) => this.setState({visible})}
-                        visible={this.state.visible}>
-          <View>
-            <Text onPress={() => this.setState({visible: false})}>
-              close
-            </Text>
-          </View>
-        </ModalComponent>
+        <PortalModal
+          ifHideDestroy={this.ifHideDestroy}
+          onChange={this.onChange}
+          visible={this.state.visible}
+        >
+          {this.getModalChildren()}
+        </PortalModal>
         <View>
-          <Text onPress={() => {
-            Modal.show(
-              <View>
-                <Text onPress={() => {
-                  Modal.hide();
-                }}>
-                  close
-                </Text>
-              </View>,
-            )
-          }}>
-            open
+          <Text onPress={this.open}>
+            open use setState
+          </Text>
+        </View>
+        <View>
+          <Text onPress={this.openUseStaticFunction}>
+            open use static
           </Text>
         </View>
       </View>

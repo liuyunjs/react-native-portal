@@ -14,6 +14,7 @@ export type PortalProps = {
   visible?: boolean,
   // 是否需要在关闭后销毁
   ifHideDestroy?: boolean,
+  id?: string,
 }
 
 export type PortalCache = {
