@@ -4991,10 +4991,10 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-portal-view@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-0.0.11.tgz#2e90ad4a7cadd821532c1eaf7c8abb4b6731a0d8"
-  integrity sha512-yjKJyQfo1s37AUHmtozr5PboXdRli2tM3uDfhzSb9Zfg7q6jWzNIoZVJzebj9jEyCOplyRW4fXsQMDcZnnoJxA==
+react-native-portal-view@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-0.0.13.tgz#abcca2fe74dcfbdd8a3c4d93028ea970500e689c"
+  integrity sha512-oNLT55MGedkpTyorwx3Pn9m6297DBA0iil9EXG+ubyL7I3bbFpTssQJX+3uRQ6k+yS+2fpe0iXE4+H0fv0FIOQ==
   dependencies:
     hoist-non-react-statics "^3.3.1"
     react-native-root-siblings "^4.0.4"

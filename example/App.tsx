@@ -41,8 +41,12 @@ export default class App extends React.PureComponent {
     this.key = portalModal.show(
       this.getModalChildren(),
       {
-        key: this.key,
+        id: this.key,
         ifHideDestroy: this.ifHideDestroy,
+        onChange(visible: boolean){
+
+        },
+        visible: true,
       },
     )
   };

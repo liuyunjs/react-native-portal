@@ -33,7 +33,7 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
    * @param children
    * @param props
    */
-  function show(children: React.ReactElement, props?: T & PortalProps): string {
+  function show(children: React.ReactElement, props?: PortalProps & T): string {
     const opts = {...staticDefaultProps, ...props};
     let {id} = opts ;
     delete opts.id;
@@ -95,6 +95,13 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
     static WrappedComponent = Component;
     // 组件名称
     static displayName = `createPortal(${Component.displayName || Component.name || 'Component'})`;
+
+    constructor(props: PortalProps & T) {
+      super(props);
+
+      this.portalKey = props.id;
+    }
+
 
     componentDidMount() {
       // 在需要显示是才渲染组件
