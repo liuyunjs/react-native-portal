@@ -2,7 +2,7 @@
  * @Description : portal static action
  * @Create on : 2019/11/17 18:15
  * @author liuyunjs
- * @version 0.0.1
+ * @version 0.0.19
  **/
 import * as React from 'react';
 import RootSibings from 'react-native-root-siblings';

@@ -2,7 +2,7 @@
  * @Description : portal creator
  * @Create on : 2019/11/20 22:52
  * @author liuyunjs
- * @version 0.0.12
+ * @version 0.0.19
  **/
 
 import * as React from 'react';
@@ -37,9 +37,7 @@ export default function createPortal<T extends PortalProps>(
    */
   function show(children: React.ReactElement, props?: T): string {
     const opts = {...staticDefaultProps, ...props};
-
     let {id, prefix} = opts;
-    delete opts.id;
 
     function triggerOnChange(visible: boolean) {
       if (opts.onChange) {

@@ -1,6 +1,6 @@
 {
   "name": "react-native-portal-view",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "private": false,
   "main": "./lib/portal.js",
   "types": "./types/index.d.ts",

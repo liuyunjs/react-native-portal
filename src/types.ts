@@ -2,7 +2,7 @@
  * @Description : portal typescript types
  * @Create on : 2019/11/18 22:04
  * @author liuyunjs
- * @version 0.0.1
+ * @version 0.0.19
  **/
 import * as React from 'react';
 import RootSibings from 'react-native-root-siblings';
