@@ -43,12 +43,16 @@ export default class Modal extends React.PureComponent<ModalProps, ModalState> {
 
   componentDidUpdate(prevProps: ModalProps, prevState: ModalState) {
     const {visible} = this.state;
+
+    console.log('Modal did update');
+
     if (prevState.visible !== visible) {
       this.props.onChange(visible);
     }
   }
 
   private update(visible: boolean) {
+    console.log('close modal in child element');
     this.setState({visible});
   }
 
@@ -68,7 +72,7 @@ export default class Modal extends React.PureComponent<ModalProps, ModalState> {
         ]}
       >
         <Text onPress={this.close}>
-          close modal in children
+          close modal in child element
         </Text>
         {this.props.children}
       </View>

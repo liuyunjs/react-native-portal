@@ -7,8 +7,6 @@
 
 import createPortal from './src/create-portal';
 import StaticAction from './src/static';
-export * from './src/types';
-export {
-  StaticAction,
-  createPortal,
-}
+import {PortalCache, PortalProps} from './src/types';
+
+export {StaticAction, createPortal, PortalCache, PortalProps};

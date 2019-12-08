@@ -111,8 +111,10 @@ export default class {
   /**
    * 创建一个不跟缓存中已有的 key 重复的 key
    */
-  private createKey(): string {
-    const key = Math.random().toString(36).slice(2);
+  createKey(prefix: string = ''): string {
+    const key = `${prefix}_${Math.random()
+      .toString(36)
+      .slice(2)}`;
     if (this.portalCache[key]) {
       return this.createKey();
     }

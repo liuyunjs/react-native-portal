@@ -19,7 +19,7 @@ export default class App extends React.PureComponent {
     visible: false,
   };
 
-  private key?: string;
+  private key: string = '0';
 
   ifHideDestroy: boolean = false;
 
@@ -29,26 +29,42 @@ export default class App extends React.PureComponent {
     }
   }
 
-  private onChange = (visible: boolean) => this.setState({visible});
+  private onChange = (visible: boolean) => {
+    if (this.state.visible === visible) {
+      return;
+    }
+    this.setState({visible});
+  };
 
-  private close = () => this.onChange(false);
+  private close = () => {
+    console.log('close modal use setState');
+    this.onChange(false);
+  };
 
-  private open = () => this.onChange(true);
+  private open = () => {
+    console.log('open modal use setState');
+    this.onChange(true);
+  };
 
-  private closeUseStaticFunction = () => portalModal.hide();
+  private closeUseStaticFunction = () => {
+
+    console.log('close modal use static function');
+    portalModal.hide();
+  };
 
   private openUseStaticFunction = () => {
+    console.log('open modal use static function');
+
     this.key = portalModal.show(
       this.getModalChildren(),
       {
         id: this.key,
         ifHideDestroy: this.ifHideDestroy,
-        onChange(visible: boolean){
-
+        onChange: (visible: boolean) => {
+          this.onChange(visible);
         },
-        visible: true,
-      },
-    )
+      } as any,
+    );
   };
 
   private getModalChildren() {
@@ -69,10 +85,10 @@ export default class App extends React.PureComponent {
   }
 
   render() {
-
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <PortalModal
+          id={this.key}
           ifHideDestroy={this.ifHideDestroy}
           onChange={this.onChange}
           visible={this.state.visible}

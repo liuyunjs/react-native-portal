@@ -25,7 +25,9 @@ const staticDefaultProps: PortalProps = {
  * 注意：如果是使用静态方法调用，并且设置了 ifHideDestroy 为 false 的时候，应该自己手动去调用 destroy 方法销毁，不然会一直存在内存中
  * @param Component
  */
-export default function createPortal<T extends {}>(Component: React.ComponentType<T>) {
+export default function createPortal<T extends PortalProps>(
+  Component: React.ComponentType<T>,
+) {
   const action = new StaticAction();
 
   /**
@@ -33,17 +35,24 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
    * @param children
    * @param props
    */
-  function show(children: React.ReactElement, props?: PortalProps & T): string {
+  function show(children: React.ReactElement, props?: T): string {
     const opts = {...staticDefaultProps, ...props};
-    let {id} = opts ;
+
+    let {id, prefix} = opts;
     delete opts.id;
+
+    function triggerOnChange(visible: boolean) {
+      if (opts.onChange) {
+        opts.onChange(visible);
+      }
+    }
+
     // 合成props
     const p = {
       ...opts,
       children,
       visible: true,
       onChange(visible: boolean) {
-
         // 在内容关闭之后，
         if (!visible) {
           // 需要在关闭之后销毁内容，调用销毁方法
@@ -55,14 +64,18 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
           }
         }
 
-        if (opts.onChange) {
-          opts.onChange(visible);
-        }
-      }
+        triggerOnChange(visible);
+      },
     } as any;
 
     // 显示内容
-    const key = action.show(<Component {...p} />, id);
+    const key = action.show(
+      <Component {...p} />,
+      id ? `${prefix}_${id}` : action.createKey(prefix),
+    );
+
+    triggerOnChange(true);
+
     return key;
   }
 
@@ -81,42 +94,36 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
     // 如果当前被包装组件的 visible props 是 true， 则代表是显示状态
     // 更新为 false 隐藏状态
     if (target.element.props.visible) {
-      target.sibings.update(React.cloneElement(target.element, {visible: false}));
+      target.sibings.update(
+        React.cloneElement(target.element, {visible: false}),
+      );
     }
   }
 
-  class Portal extends React.PureComponent<PortalProps & T> {
+  class Portal extends React.PureComponent<T> {
     portalKey?: string;
+    // mounted?: boolean;
 
-    static defaultProps: PortalProps = {
-      ifHideDestroy: true,
-    };
+    static defaultProps: PortalProps = staticDefaultProps;
     // 被包装的组件
     static WrappedComponent = Component;
     // 组件名称
-    static displayName = `createPortal(${Component.displayName || Component.name || 'Component'})`;
+    static displayName = `createPortal(${Component.displayName ||
+      Component.name ||
+      'Component'})`;
 
-    constructor(props: PortalProps & T) {
+    constructor(props: T) {
       super(props);
 
-      this.portalKey = props.id;
+      this.portalKey = props.id ? `${props.prefix}_${props.id}` : undefined;
     }
-
 
     componentDidMount() {
       // 在需要显示是才渲染组件
-      if (this.props.visible) {
-        this.show();
-      }
+      this.show();
     }
 
-    componentDidUpdate(prevProps: PortalProps & T) {
-      // 当选择隐藏组件后销毁时
-      // 在组件 改变 visible 的值为 false 之后，父组件 setState 改变 visible 为 false 之后
-      // 此时如果不阻止，被包装组件会再次被创建
-      if (!this.portalKey && !this.props.visible) {
-        return;
-      }
+    componentDidUpdate() {
       this.show();
     }
 
@@ -124,20 +131,37 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
       this.portalKey && action.hide(this.portalKey);
     }
 
-    show() {
+    private getKey() {
+      // 当需要显示组件时，不用管是否创建过组件
+      if (this.props.visible) {
+        return this.portalKey;
+      }
+
+      // 否则需要从缓存中去读取对应 key
+      const key = action.getKey(this.portalKey);
+      if (key) {
+        return key.slice(1);
+      }
+      return key;
+    }
+
+    private show() {
+      const key = this.getKey();
+      // 未通过 key 的获取逻辑， 直接返回
+      if (key === false) {
+        return;
+      }
+
+      const {prefix} = this.props;
+
       // 将内容渲染在根节点下
       this.portalKey = action.show(
-        (
-          <Component
-            {...this.props}
-            onChange={this.onChange}
-          />
-        ),
-        this.portalKey,
+        <Component {...this.props} onChange={this.onChange} />,
+        key ? key : action.createKey(prefix),
       );
     }
 
-    onChange = (visible: boolean) => {
+    private onChange = (visible: boolean) => {
       // 当被包装组件关闭后，如果需要在关闭时销毁组件，执行销毁逻辑
       if (!visible && this.props.ifHideDestroy && this.portalKey) {
         action.hide(this.portalKey);
@@ -155,7 +179,7 @@ export default function createPortal<T extends {}>(Component: React.ComponentTyp
 
   return {
     // 包装后的组件
-    Component: hoistStatics(Portal, Component) as React.ComponentType<PortalProps & T>,
+    Component: hoistStatics(Portal, Component) as React.ComponentType<T>,
 
     // 以下为静态方法
     // 展示被包装组件
