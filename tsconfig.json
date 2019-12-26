@@ -13,8 +13,7 @@
     "resolveJsonModule": true,
     "declaration": true,
     "rootDir": "./",
-    "outDir": "lib",
-    "declarationDir": "./types"
+    "outDir": "lib"
   },
   "include": ["src/*"],
   "exclude": [

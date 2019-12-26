@@ -67,3 +67,5 @@ ios
 android
 
 example/node_modules
+example/src/createPortal.tsx
+example/src/index.ts

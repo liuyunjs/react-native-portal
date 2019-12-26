@@ -13,11 +13,11 @@ import pkg from './package.json';
 const typescriptConfig = {
   cacheRoot: 'tmp/.rpt2_cache',
   typescript: require('typescript'),
-  useTsconfigDeclarationDir: true,
+  // useTsconfigDeclarationDir: true,
 };
 
 const noDeclarationConfig = Object.assign({}, typescriptConfig, {
-  tsconfigOverride: { compilerOptions: { declaration: false } }
+  tsconfigOverride: {compilerOptions: {declaration: false}},
 });
 
 const makeExternalPredicate = externalArr => {
@@ -32,35 +32,32 @@ const deps = Object.keys(pkg.dependencies || {});
 const peerDeps = Object.keys(pkg.peerDependencies || {});
 
 const config = {
-  input: 'index.ts',
-  external: makeExternalPredicate(deps.concat(peerDeps))
+  input: 'src/index.ts',
+  external: makeExternalPredicate(deps.concat(peerDeps)),
 };
 
-const es = (Object.assign({}, config, {
+const es = Object.assign({}, config, {
   output: {
     file: pkg.main,
     format: 'es',
-    exports: 'named'
+    exports: 'named',
   },
   plugins: [
     resolve(),
     typescript(typescriptConfig),
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
-  ]
-}));
+  ],
+});
 
 const cjs = Object.assign({}, config, {
   output: {
     file: pkg.main,
     format: 'cjs',
-    exports: 'named'
+    exports: 'named',
   },
-  plugins: [
-    resolve(),
-    typescript(typescriptConfig)
-  ]
+  plugins: [resolve(), typescript(typescriptConfig)],
 });
 
-export default [es]
+export default [es];
