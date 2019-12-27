@@ -12,7 +12,7 @@
     "invariant": "^2.2.4",
     "react": "16.9.0",
     "react-native": "0.61.4",
-    "react-native-portal-view": "^0.0.22",
+    "react-native-portal-view": "^0.0.23",
     "react-use": "^13.12.2"
   },
   "devDependencies": {
