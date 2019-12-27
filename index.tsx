@@ -81,23 +81,24 @@ export const createPortalProvider = () => {
     };
 
     const create = (element: React.ReactElement): PortalHandle => {
-      id++;
+      const portalId = ++id;
+
       setState(
         getState().concat([
           {
-            id,
+            id: portalId,
             element,
           },
         ]),
       );
 
-      const handle: PortalHandle = () => destroy(id);
+      const handle: PortalHandle = () => destroy(portalId);
 
       handle.update = (element: React.ReactElement) => {
-        update(id, element);
+        update(portalId, element);
       };
 
-      handle.id = id;
+      handle.id = portalId;
       handle.element = element;
 
       return handle;
