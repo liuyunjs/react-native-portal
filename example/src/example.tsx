@@ -6,12 +6,10 @@
  **/
 
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import useGetSetState from 'react-use/lib/useGetSetState';
-import portal from './index';
+import { Portal, HOC, usePortalElement, pop } from './index';
 import Modal from './components/modal';
-
-const {Portal, HOC, usePortalElement} = portal;
 
 const ModalHOC = HOC(Modal);
 
@@ -46,7 +44,7 @@ export default function App(props: any) {
     };
   }
 
-  const {hoc, hook, component} = getState();
+  const { hoc, hook, component } = getState();
 
   return (
     <>
@@ -55,11 +53,9 @@ export default function App(props: any) {
         <Text onPress={onPress('hook')}>通过 hook 创建</Text>
         <Text onPress={onPress('component')}>通过 component 创建</Text>
       </View>
-      {hoc && <ModalHOC onPress={() => portal.pop()} text="hoc" />}
-      {hook && <ModalHook onPress={onPress('hook')} text="hook" />}
-      {component && (
-        <ModalComponent onPress={onPress('component')} text="component" />
-      )}
+      {hoc && <ModalHOC onPress={pop} text="hoc" />}
+      {hook && <ModalHook onPress={pop} text="hook" />}
+      {component && <ModalComponent onPress={onPress('component')} text="component" />}
     </>
   );
 }

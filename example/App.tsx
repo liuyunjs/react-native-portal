@@ -7,15 +7,13 @@
  **/
 
 import * as React from 'react';
-import portal from './src';
+import { PortalProvider } from './src';
 import Example from './src/example';
-
-const {Provider} = portal;
 
 export default () => {
   return (
-    <Provider>
+    <PortalProvider>
       <Example />
-    </Provider>
+    </PortalProvider>
   );
 };

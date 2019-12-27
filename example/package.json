@@ -9,15 +9,17 @@
     "test": "jest"
   },
   "dependencies": {
+    "invariant": "^2.2.4",
     "react": "16.9.0",
     "react-native": "0.61.4",
-    "react-native-portal-view": "^0.0.18",
+    "react-native-portal-view": "^0.0.22",
     "react-use": "^13.12.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
+    "@types/invariant": "^2.2.31",
     "@types/jest": "^24.0.18",
     "@types/react-native": "^0.60.22",
     "@types/react-test-renderer": "16.9.0",
