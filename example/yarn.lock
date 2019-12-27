@@ -2903,13 +2903,6 @@ hermes-engine@^0.2.1:
   resolved "https://registry.npmjs.org/hermes-engine/-/hermes-engine-0.2.1.tgz#25c0f1ff852512a92cb5c5cc47cf967e1e722ea2"
   integrity sha512-eNHUQHuadDMJARpaqvlCZoK/Nitpj6oywq3vQ3wCwEsww5morX34mW5PmKWQTO7aU0ck0hgulxR+EVDlXygGxQ==
 
-hoist-non-react-statics@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#101685d3aff3b23ea213163f6e8e12f4f111e19f"
-  integrity sha512-wbg3bpgA/ZqWrZuMOeJi8+SKMhr7X9TesL/rXMjTzh0p0JUBo3II8DHboYbuIXWRlttrUFxwcu/5kygrCw8fJw==
-  dependencies:
-    react-is "^16.7.0"
-
 hosted-git-info@^2.1.4:
   version "2.8.5"
   resolved "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.8.5.tgz#759cfcf2c4d156ade59b0b2dfabddc42a6b9c70c"
@@ -5085,26 +5078,18 @@ react-fast-compare@^2.0.4:
   resolved "https://registry.npm.taobao.org/react-fast-compare/download/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha1-6EtNRVsP7BE+BALDKTUnFRlvgfk=
 
-react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
+react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   version "16.12.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-portal-view@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-0.0.18.tgz#46e7e52e597d07cae95549883048f065fd9345e9"
-  integrity sha512-rUzcZy4Tic2dgJhhpT5fO4vrpm64qm+kHye44g5+t/3CaXBJt4nnwFt/E71fqWq8pmaQYkjeJOYHq0iu+nBzsQ==
+react-native-portal-view@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-0.0.22.tgz#51e5fe490e1cc263d061a71d0e1a18adf5da954d"
+  integrity sha512-dkYeL+VS7BDQmK162tCTWgg9tAxGBfMWwu8L0BIddKx7Pj18uVbMhlejlcdcsw7Le40Y4m6inXlWN8JFTh36OQ==
   dependencies:
-    hoist-non-react-statics "^3.3.1"
-    react-native-root-siblings "^4.0.4"
-    tslib "^1.10.0"
-
-react-native-root-siblings@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.npmjs.org/react-native-root-siblings/-/react-native-root-siblings-4.0.4.tgz#c8aa3cda791e472d7c53ab4dff0e96ebc9c90c69"
-  integrity sha512-CroI+VMZZFVSCaQWIDfRYC9MuChfbCRARb139fgjsjU5dw90CSStTRQKYkTdtKdI8v73IdruWBCcwKacgj088w==
-  dependencies:
-    static-container "^1.5.1"
+    invariant "^2.2.4"
+    react-use "^13.12.2"
 
 react-native@0.61.4:
   version "0.61.4"
@@ -5841,11 +5826,6 @@ stacktrace-parser@^0.1.3:
   integrity sha512-Evm+NuZ2ZTwGazsbsZC+EV1EGsvyxgIvtNwbyFfeXaq/8L78M5Kdh0qpmQaTkUpbOAKbbPP7c7qZa7u8XFsrUA==
   dependencies:
     type-fest "^0.7.1"
-
-static-container@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.npmjs.org/static-container/-/static-container-1.5.1.tgz#9d7a94e04dea864539a7b6a1304843ada740dc19"
-  integrity sha512-OFChfLKIvSzaMA3otS5CEabJTIzHFPhMxogIT+io4F207PXTvS6woFyjXIyXyqMIYAhryePGeFZYC6uLcG1lpA==
 
 static-extend@^0.1.1:
   version "0.1.2"

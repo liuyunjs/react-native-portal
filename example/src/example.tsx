@@ -8,7 +8,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import useGetSetState from 'react-use/lib/useGetSetState';
-import { Portal, HOC, usePortalElement, pop } from './index';
+import { Portal, HOC, usePortalElement, pop } from 'react-native-portal-view';
 import Modal from './components/modal';
 
 const ModalHOC = HOC(Modal);
