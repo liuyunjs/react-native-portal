@@ -1,9 +1,9 @@
 {
   "name": "react-native-portal-view",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "private": false,
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./lib/src/index.d.ts",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",

@@ -94,8 +94,8 @@ export const createPortalProvider = () => {
 
       const handle: PortalHandle = () => destroy(portalId);
 
-      handle.update = (element: React.ReactElement) => {
-        update(portalId, element);
+      handle.update = (elem: React.ReactElement) => {
+        update(portalId, elem);
       };
 
       handle.id = portalId;
