@@ -7,19 +7,9 @@
 
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import useGetSetState from 'react-use/lib/useGetSetState';
-import { Portal, HOC, usePortalElement, pop } from 'react-native-portal-view';
+import useToggle from 'react-use/lib/useToggle';
+import { Portal, PortalProvider } from 'react-native-portal-view';
 import Modal from './components/modal';
-
-const ModalHOC = HOC(Modal);
-
-const ModalHook = (props: any) => {
-  usePortalElement({
-    children: <Modal {...props} />,
-  });
-
-  return null;
-};
 
 const ModalComponent = (props: any) => {
   return (
@@ -29,33 +19,39 @@ const ModalComponent = (props: any) => {
   );
 };
 
-export default function App(props: any) {
-  const [getState, setState] = useGetSetState<any>({
-    hoc: false,
-    hook: false,
-    component: false,
-  });
-
-  function onPress(key: string) {
-    return () => {
-      setState({
-        [key]: !getState()[key],
-      });
-    };
-  }
-
-  const { hoc, hook, component } = getState();
+export default function App() {
+  const [visible, toggle] = useToggle(false);
+  const [activeKey, setActiveKey] = React.useState(1);
 
   return (
     <>
       <View style={styles.container}>
-        <Text onPress={onPress('hoc')}>通过 HOC 创建 </Text>
-        <Text onPress={onPress('hook')}>通过 hook 创建</Text>
-        <Text onPress={onPress('component')}>通过 component 创建</Text>
+        <Text onPress={toggle}> 创建</Text>
+        <Text
+          onPress={() => {
+            setActiveKey(activeKey === 1 ? 2 : 1);
+          }}
+        >
+          切换Provider
+        </Text>
       </View>
-      {hoc && <ModalHOC onPress={pop} text="hoc" />}
-      {hook && <ModalHook onPress={pop} text="hook" />}
-      {component && <ModalComponent onPress={onPress('component')} text="component" />}
+      {visible && <ModalComponent onPress={toggle} text={`component ${activeKey}`} />}
+
+      <View style={styles.portalProvider1}>
+        <PortalProvider
+          maybeActive={() => {
+            return activeKey === 1;
+          }}
+        />
+      </View>
+
+      <View style={styles.portalProvider2}>
+        <PortalProvider
+          maybeActive={() => {
+            return activeKey === 2;
+          }}
+        />
+      </View>
     </>
   );
 }
@@ -65,5 +61,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  portalProvider1: {
+    width: 300,
+    height: 300,
+    backgroundColor: 'red',
+  },
+  portalProvider2: {
+    width: 400,
+    height: 400,
+    backgroundColor: 'blue',
   },
 });

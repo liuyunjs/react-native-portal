@@ -7,13 +7,8 @@
  **/
 
 import * as React from 'react';
-import { PortalProvider } from './src';
 import Example from './src/example';
 
 export default () => {
-  return (
-    <PortalProvider>
-      <Example />
-    </PortalProvider>
-  );
+  return <Example />;
 };

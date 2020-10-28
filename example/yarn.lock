@@ -5083,13 +5083,12 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-portal-view@^0.0.22:
-  version "0.0.22"
-  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-0.0.22.tgz#51e5fe490e1cc263d061a71d0e1a18adf5da954d"
-  integrity sha512-dkYeL+VS7BDQmK162tCTWgg9tAxGBfMWwu8L0BIddKx7Pj18uVbMhlejlcdcsw7Le40Y4m6inXlWN8JFTh36OQ==
+react-native-portal-view@^1.0.0-beta1:
+  version "1.0.0-beta1"
+  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-1.0.0-beta1.tgz#8de231d464c9d82866af430eaad9fd3e5d006949"
+  integrity sha512-aayQW8eUx50+JByXS6NLFgKdvHqtatmNRG2YGjkz8HMWHEx4AnhjaUSVPzajICDabJfsJ4RKHVFE+WVxtQ6ULA==
   dependencies:
-    invariant "^2.2.4"
-    react-use "^13.12.2"
+    tslib "^2.0.3"
 
 react-native@0.61.4:
   version "0.61.4"
@@ -5140,6 +5139,11 @@ react-test-renderer@16.9.0:
     prop-types "^15.6.2"
     react-is "^16.9.0"
     scheduler "^0.15.0"
+
+react-use-callback@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npm.taobao.org/react-use-callback/download/react-use-callback-0.0.3.tgz#2b5b88fec0039b0d0debe7fa608f7ae2fbf53f22"
+  integrity sha1-K1uI/sADmw0N6+f6YI964vv1PyI=
 
 react-use@^13.12.2:
   version "13.12.2"
@@ -6120,6 +6124,11 @@ tslib@^1.10.0, tslib@^1.8.1:
   version "1.10.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
+tslib@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.0.3.tgz#8e0741ac45fc0c226e58a17bfc3e64b9bc6ca61c"
+  integrity sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ==
 
 tsutils@^3.7.0:
   version "3.17.1"

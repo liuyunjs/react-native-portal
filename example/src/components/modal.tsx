@@ -5,7 +5,7 @@
  * @version 0.0.2
  **/
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function Example(props: any) {
   return (
@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 16,
-    color: 'blue',
+    color: '#fff',
   },
 });

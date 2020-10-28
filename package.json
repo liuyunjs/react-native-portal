@@ -1,15 +1,10 @@
 {
   "name": "react-native-portal-view",
-  "version": "0.0.24",
+  "version": "1.0.0-beta1",
   "private": false,
   "main": "./lib/index.js",
   "types": "./lib/src/index.d.ts",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint .",
     "build": "rollup --config rollup.config.js"
   },
   "bugs": {
@@ -20,27 +15,15 @@
     "url": "https://github.com/liuyunjs/react-native-portal"
   },
   "dependencies": {
-    "react-use": "^13.12.2",
-    "invariant": "^2.2.4"
+    "tslib": "^2.0.3"
   },
   "devDependencies": {
-    "@types/invariant": "^2.2.31",
     "@babel/core": "^7.7.2",
     "@babel/runtime": "^7.7.2",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "@types/hoist-non-react-statics": "^3.3.1",
-    "@types/jest": "^24.0.22",
+    "@types/lodash": "^4.14.162",
     "@types/react": "^16.9.11",
-    "@types/react-native": "^0.60.22",
-    "@types/react-redux": "^7.1.5",
-    "@types/react-test-renderer": "^16.9.1",
-    "babel-jest": "^24.9.0",
     "eslint": "^6.6.0",
-    "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.57.0",
     "react": "16.9.0",
-    "react-native": "0.61.4",
-    "react-test-renderer": "16.9.0",
     "rollup": "^1.27.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
@@ -48,11 +31,7 @@
     "typescript": "^3.7.2"
   },
   "peerDependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.4"
-  },
-  "jest": {
-    "preset": "react-native"
+    "react": "16.9.0"
   },
   "keywords": [
     "react-native",

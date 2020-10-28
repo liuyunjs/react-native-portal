@@ -6,12 +6,12 @@
  **/
 
 import typescript from 'rollup-plugin-typescript2';
-import replace from 'rollup-plugin-replace';
+// import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import pkg from './package.json';
 
 const typescriptConfig = {
-  cacheRoot: 'tmp/.rpt2_cache',
+  // cacheRoot: 'tmp/.rpt2_cache',
   typescript: require('typescript'),
   // useTsconfigDeclarationDir: true,
 };
@@ -32,32 +32,25 @@ const deps = Object.keys(pkg.dependencies || {});
 const peerDeps = Object.keys(pkg.peerDependencies || {});
 
 const config = {
-  input: 'src/index.tsx',
+  input: 'src/index.ts',
   external: makeExternalPredicate(deps.concat(peerDeps)),
 };
 
-const es = Object.assign({}, config, {
-  output: {
-    file: pkg.main,
-    format: 'es',
-    exports: 'named',
-  },
-  plugins: [
-    resolve(),
-    typescript(typescriptConfig),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-  ],
-});
-
-const cjs = Object.assign({}, config, {
-  output: {
-    file: pkg.main,
-    format: 'cjs',
-    exports: 'named',
-  },
-  plugins: [resolve(), typescript(typescriptConfig)],
-});
-
-export default [es];
+export default [
+  Object.assign({}, config, {
+    output: {
+      file: pkg.main,
+      format: 'es',
+      exports: 'named',
+    },
+    plugins: [resolve(), typescript(typescriptConfig)],
+  }),
+  Object.assign({}, config, {
+    output: {
+      file: './example/lib/index.js',
+      format: 'es',
+      exports: 'named',
+    },
+    plugins: [resolve(), typescript(typescriptConfig)],
+  }),
+];
