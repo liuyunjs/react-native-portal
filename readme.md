@@ -51,7 +51,7 @@ import { View, Text, AppRegistry } from 'react-native';
 import { PortalProvider,Portal } from 'react-native-portal-view';
 import useToggle from 'react-use/lib/useToggle';
 
-function Example(props) {
+function Modal(props) {
   return (
     <View style={styles.container}>
       <Text onPress={props.onPress} style={styles.text}>
