@@ -2,26 +2,22 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "isolatedModules": false,
     "jsx": "react",
     "lib": ["es6"],
     "moduleResolution": "node",
-    "noEmit": true,
+    "noEmit": false,
     "strict": true,
-    "target": "es5",
+    "target": "esnext",
     "resolveJsonModule": true,
     "declaration": true,
-    "rootDir": "./",
-    "outDir": "lib"
+    "importHelpers": true,
+    "outDir": "./lib"
   },
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
-    "babel.config.js",
-    "metro.config.js",
-    "jest.config.js",
-    "example/*",
-    "rollup.config.js",
-    "lib/*"
+    "rollup.config.js"
   ]
 }
