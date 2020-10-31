@@ -13,7 +13,7 @@ import Modal from './components/modal';
 
 const ModalComponent = (props: any) => {
   return (
-    <Portal>
+    <Portal onDestroy={() => console.log('onDestroy')} onMount={() => console.log('onMount')}>
       <Modal {...props} />
     </Portal>
   );
@@ -26,7 +26,7 @@ export default function App() {
   return (
     <>
       <View style={styles.container}>
-        <Text onPress={toggle}> 创建</Text>
+        <Text onPress={toggle}> {visible ? '销毁' : '创建'}</Text>
         <Text
           onPress={() => {
             setActiveKey(activeKey === 1 ? 2 : 1);

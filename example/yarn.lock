@@ -5083,10 +5083,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-portal-view@^1.0.0-beta1:
-  version "1.0.0-beta1"
-  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-1.0.0-beta1.tgz#8de231d464c9d82866af430eaad9fd3e5d006949"
-  integrity sha512-aayQW8eUx50+JByXS6NLFgKdvHqtatmNRG2YGjkz8HMWHEx4AnhjaUSVPzajICDabJfsJ4RKHVFE+WVxtQ6ULA==
+react-native-portal-view@^1.0.0-beta3:
+  version "1.0.0-beta3"
+  resolved "https://registry.npmjs.org/react-native-portal-view/-/react-native-portal-view-1.0.0-beta3.tgz#08c0b854a052d1db7b121a3809baf7b8a262a8d0"
+  integrity sha512-H/ljUTDZYcPZ2qHeCVYiugzEkOCLMlkkyaKDxBdqgu7GAMnmU6rv5NxgXlZp5aYAa/AFay/asMjfvARXENpHeg==
   dependencies:
     tslib "^2.0.3"
 

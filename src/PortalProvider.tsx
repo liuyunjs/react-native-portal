@@ -46,6 +46,12 @@ export class PortalProvider extends React.PureComponent<PortalProviderProps, Por
   }
 
   render() {
-    return this.state.portals.map(item => item.element);
+    return this.state.portals.map((item, index) => {
+      if (!item.element) {
+        return null;
+      }
+      // @ts-ignore
+      return React.cloneElement(item.element, { key: index });
+    });
   }
 }

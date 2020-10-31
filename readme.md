@@ -40,7 +40,9 @@ _包裹的组件会被渲染到所有处于活跃状态的 PortalProvider 下_
 
 | 名称     | 默认值 |        类型        | 描述                 |
 | -------- | :----: | :----------------: | :------------------- |
-| children |   null    | React.ReactNode | 子组件 |
+| children |   void    | React.ReactNode | 子组件 |
+| onMount |   void    | function(): void | Portal 的 componentDidMount 触发 |
+| onDestroy |   void    | function(): void | Portal 的 componentWillunmount 触发 |
 
 
 #### 示例
@@ -63,7 +65,7 @@ function Modal(props) {
 
 const ModalComponent = (props: any) => {
   return (
-    <Portal>
+    <Portal onDestroy={() => console.log('onDestroy')} onMount={() => console.log('onMount')}>
       <Modal {...props} />
     </Portal>
   );
@@ -77,7 +79,7 @@ function App() {
   return (
     <>
       <View style={styles.container}>
-        <Text onPress={toggle}> 创建</Text>
+        <Text onPress={toggle}> {visible ? '销毁' : '创建'}</Text>
         <Text
           onPress={() => {
             setActiveKey(activeKey === 1 ? 2 : 1);
