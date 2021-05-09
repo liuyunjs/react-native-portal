@@ -2,9 +2,7 @@
 
 ## 特性
 
-1. 可实现类似 h5 position：'fixed'效果
-2. 可以有多个相互不影响的根节点
-3. 可以同时将一个组件渲染到多个根节点
+实现类似 h5 position：'fixed'效果
 
 ## 安装
 
@@ -30,7 +28,7 @@ _提供一个根节点，可以处于组件树种任何位置_
 
 | 名称     | 默认值 |        类型        | 描述                 |
 | -------- | :----: | :----------------: | :------------------- |
-| maybeActive |   () => true    | function():boolean | 返回值代表当前 Provider 是否处于活跃状态 |
+| children |   void    | React.ReactNode | children |
 
 
 ### Portal
@@ -41,8 +39,6 @@ _包裹的组件会被渲染到所有处于活跃状态的 PortalProvider 下_
 | 名称     | 默认值 |        类型        | 描述                 |
 | -------- | :----: | :----------------: | :------------------- |
 | children |   void    | React.ReactNode | 子组件 |
-| onMount |   void    | function(): void | Portal 的 componentDidMount 触发 |
-| onDestroy |   void    | function(): void | Portal 的 componentWillunmount 触发 |
 
 
 #### 示例
@@ -65,7 +61,7 @@ function Modal(props) {
 
 const ModalComponent = (props: any) => {
   return (
-    <Portal onDestroy={() => console.log('onDestroy')} onMount={() => console.log('onMount')}>
+    <Portal >
       <Modal {...props} />
     </Portal>
   );
@@ -77,7 +73,7 @@ function App() {
   const [activeKey, setActiveKey] = React.useState(1);
 
   return (
-    <>
+    <PortalProvider>
       <View style={styles.container}>
         <Text onPress={toggle}> {visible ? '销毁' : '创建'}</Text>
         <Text
@@ -90,22 +86,7 @@ function App() {
       </View>
       {visible && <ModalComponent onPress={toggle} text={`component ${activeKey}`} />}
 
-      <View style={styles.portalProvider1}>
-        <PortalProvider
-          maybeActive={() => {
-            return activeKey === 1;
-          }}
-        />
-      </View>
-
-      <View style={styles.portalProvider2}>
-        <PortalProvider
-          maybeActive={() => {
-            return activeKey === 2;
-          }}
-        />
-      </View>
-    </>
+    </PortalProvider>
   );
 }
 
@@ -116,16 +97,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  portalProvider1: {
-    width: 300,
-    height: 300,
-    backgroundColor: 'red',
-  },
-  portalProvider2: {
-    width: 400,
-    height: 400,
-    backgroundColor: 'blue',
-  },
 });
 
 AppRegistry.registerComponent('example', () => App);

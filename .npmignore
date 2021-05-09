@@ -1,5 +1,4 @@
 .idea
-tmp
 *.lock
 node_modules
 example

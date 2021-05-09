@@ -1,21 +1,48 @@
 import React from 'react';
-import { PortalProvider } from './PortalProvider';
+import PortalStore from './PortalStore';
+
+type PortalElement = {
+  key: string;
+  element: React.ReactElement;
+};
 
 export class PortalUpdater {
-  element: React.ReactNode;
-  private readonly _portalProvider: PortalProvider;
+  private _portals: PortalElement[] = [];
+  private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null = null;
 
-  constructor(element: React.ReactNode, portalProvider: PortalProvider) {
-    this.element = element;
-    this._portalProvider = portalProvider;
+  init(forceUpdate: React.Dispatch<React.SetStateAction<never[]>>) {
+    this._forceUpdate = forceUpdate;
   }
 
-  update(element: React.ReactNode) {
-    this.element = element;
-    this._portalProvider.update();
+  add(element: React.ReactElement) {
+    const portalKey = Math.random().toString(32).slice(2);
+    this._portals.push({
+      key: portalKey,
+      element,
+    });
+    if (!this._forceUpdate) {
+      PortalStore.forceUpdate();
+    } else {
+      this._forceUpdate!([]);
+    }
+
+    return portalKey;
   }
 
-  remove() {
-    this._portalProvider.remove(this);
+  update(key: string, element: React.ReactElement) {
+    this._portals = this._portals.map(portalElement => {
+      if (portalElement.key === key) return { key, element };
+      return portalElement;
+    });
+    this._forceUpdate!([]);
+  }
+
+  remove(key: string) {
+    this._portals = this._portals.filter(portalElement => portalElement.key !== key);
+    this._forceUpdate!([]);
+  }
+
+  get portals() {
+    return this._portals;
   }
 }

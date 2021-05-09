@@ -15,9 +15,10 @@
     "importHelpers": true,
     "outDir": "./lib"
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "node_modules",
-    "rollup.config.js"
   ]
 }

@@ -1,32 +1,30 @@
-import * as React from 'react';
-import { PortalUpdater } from './PortalUpdater';
-import { PortalQueue } from './PortalQueue';
-import { PortalContainer, PortalContainerProps } from './PortalContainer';
+import React from 'react';
+import useUpdateEffect from 'react-use/esm/useUpdateEffect';
+import PortalStore from './PortalStore';
 
-export class Portal extends React.PureComponent<PortalContainerProps> {
-  private _portals: PortalUpdater[] = [];
+export const Portal = ({
+  children,
+  namespace,
+}: {
+  children: React.ReactNode;
+  namespace: string;
+}) => {
+  const portalKeyRef = React.useRef<string>();
 
-  componentDidMount() {
-    this._portals = PortalQueue.add(this._getElement());
-  }
+  const updater = PortalStore.getUpdater(namespace);
 
-  componentDidUpdate(prevProps: Readonly<PortalContainerProps & { children: React.ReactNode }>) {
-    const { children } = this.props;
-    if (children !== prevProps.children) {
-      this._portals.forEach(portal => portal.update(this._getElement()));
-    }
-  }
+  React.useEffect(() => {
+    portalKeyRef.current = updater.add(children as React.ReactElement);
 
-  componentWillUnmount() {
-    this._portals.forEach(portal => portal.remove());
-  }
+    return () => {
+      updater.remove(portalKeyRef.current!);
+    };
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updater]);
 
-  private _getElement() {
-    const { children, ...restProps } = this.props;
-    return <PortalContainer {...restProps}>{children}</PortalContainer>;
-  }
+  useUpdateEffect(() => {
+    updater.update(portalKeyRef.current!, children as React.ReactElement);
+  }, [children]);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
