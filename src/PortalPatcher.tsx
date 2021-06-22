@@ -2,7 +2,7 @@ import React from 'react';
 import { PortalRender } from './PortalRender';
 import PortalStore from './PortalStore';
 
-export const PortalPatcher = React.memo(() => {
+export const PortalPatcher = React.memo(function PortalPatcher() {
   PortalStore.init(React.useState([])[1]);
 
   const items: React.ReactNode[] = [];

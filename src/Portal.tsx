@@ -1,30 +1,24 @@
 import React from 'react';
-import useUpdateEffect from 'react-use/esm/useUpdateEffect';
-import PortalStore from './PortalStore';
+// @ts-ignore
+import { unstable_RootTagContext as RootTagContext } from 'react-native';
 
-export const Portal = ({
-  children,
-  namespace,
-}: {
+type PortalProps = {
   children: React.ReactNode;
-  namespace: string;
-}) => {
-  const portalKeyRef = React.useRef<string>();
+  fabric?: boolean;
+};
 
-  const updater = PortalStore.getUpdater(namespace);
+let createPortal: any;
 
-  React.useEffect(() => {
-    portalKeyRef.current = updater.add(children as React.ReactElement);
+const getCreatePortal = (fabric?: boolean) => {
+  if (createPortal) return;
+  createPortal = fabric
+    ? require('react-native/Libraries/Renderer/shims/ReactFabric').createPortal
+    : require('react-native/Libraries/Renderer/shims/ReactNative').createPortal;
+};
 
-    return () => {
-      updater.remove(portalKeyRef.current!);
-    };
-    //  eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updater]);
+export const Portal: React.FC<PortalProps> = ({ children, fabric }) => {
+  getCreatePortal(fabric);
+  const rootTag = React.useContext(RootTagContext);
 
-  useUpdateEffect(() => {
-    updater.update(portalKeyRef.current!, children as React.ReactElement);
-  }, [children]);
-
-  return null;
+  return createPortal(children, rootTag);
 };
