@@ -10,18 +10,13 @@ class PortalStore {
   }
 
   forceUpdate() {
-    this._forceUpdate?.([]);
-  }
-
-  setContainer(namespace: string, componentOrElement: React.ComponentType<any> | React.ReactElement) {
-    this.getUpdater(namespace).setContainer(componentOrElement);
-  }
-
-  getUpdater(namespace: string) {
     if (!this._forceUpdate) {
       throw new Error('PortalProvider not found');
     }
+    this._forceUpdate([]);
+  }
 
+  getUpdater(namespace: string) {
     const cachedUpdater = this._store[namespace];
     if (cachedUpdater) return cachedUpdater;
     const updater = new PortalUpdater();

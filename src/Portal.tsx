@@ -18,7 +18,7 @@ const getCreatePortal = (fabric?: boolean) => {
 
 export const Portal: React.FC<PortalProps> = ({ children, fabric }) => {
   getCreatePortal(fabric);
-  const rootTag = React.useContext(RootTagContext);
+  let rootTag = React.useContext(RootTagContext);
 
   return createPortal(children, rootTag);
 };

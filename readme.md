@@ -1,7 +1,7 @@
 # react-native-portal-view
 
 ## 特性
-
+将组件渲染到组件的其他位置
 实现类似 h5 position：'fixed'效果
 
 ## 安装
@@ -32,7 +32,8 @@ _提供一个根节点，可以处于组件树种任何位置_
 
 
 ### Portal
-_包裹的组件会被渲染到所有处于活跃状态的 PortalProvider 下_
+_包裹的组件会被渲染到根节点下_
+ 此组件跟 PortalProvider 无关
 
 #### Props
 
@@ -41,13 +42,49 @@ _包裹的组件会被渲染到所有处于活跃状态的 PortalProvider 下_
 | children |   void    | React.ReactNode | 子组件 |
 
 
-#### 示例
+## 工具类
+### PortalStore
+
+#### getUpdater: (namespace: string) => [PortalUpdater](#portalupdater)
+返回指定的 PortalUpdater 示例，不存在会创建一个
+
+
+### PortalUpdater
+提供一组方法用于使用函数的方式创建 Portal，添加的组件会渲染到 PortalProvider 中
+使用前要在组件树中添加 PortalProvider
+
+#### setContainer: (componentOrElement: React.ComponentType<any> | React.ReactElement) => void
+添加一个容器，例如 react-redux 的 Provider 等;
+所有使用 add 方法添加的组件都会渲染到这个容器中
+
+#### add: (element: React.ReactElement) => string
+添加一个组件，并且返回一个key，这个key用于后续的删除及更新操作
+
+#### update: (key: string, element: React.ReactElement) => void
+更新指定的组件
+
+#### remove: (key: string) => void;
+删除指定组件
+
+## 示例
 
 ```javascript
 import * as React from 'react';
 import { View, Text, AppRegistry } from 'react-native';
-import { PortalProvider,Portal } from 'react-native-portal-view';
+import { PortalProvider,Portal, PortalStore } from 'react-native-portal-view';
 import useToggle from 'react-use/lib/useToggle';
+
+PortalStore.getUpdater('default').setContainer(props => (
+  <View
+    {...props}
+    pointerEvents="box-none"
+    style={[props.style, StyleSheet.absoluteFill, { backgroundColor: 'pink' }]}
+  />
+));
+
+// PortalStore.getUpdater('default').setContainer(
+//   <View pointerEvents="box-none" style={[StyleSheet.absoluteFill, { backgroundColor: 'pink' }]} />,
+// );
 
 function Modal(props) {
   return (
@@ -59,34 +96,35 @@ function Modal(props) {
   );
 }
 
-const ModalComponent = (props: any) => {
-  return (
-    <Portal >
-      <Modal {...props} />
-    </Portal>
-  );
-};
-
 
 function App() {
   const [visible, toggle] = useToggle(false);
-  const [activeKey, setActiveKey] = React.useState(1);
+  const portalKeyRef = React.useRef<string>();
+
+  const onPress = () => {
+    if (!portalKeyRef.current) {
+      portalKeyRef.current = PortalStore.getUpdater('default').add(
+        <Modal onPress={onPress} text="component modal use PortalStore" />,
+      );
+    } else {
+      PortalStore.getUpdater('default').remove(portalKeyRef.current);
+      portalKeyRef.current = undefined;
+    }
+  };
 
   return (
-    <PortalProvider>
+    <>
       <View style={styles.container}>
-        <Text onPress={toggle}> {visible ? '销毁' : '创建'}</Text>
-        <Text
-          onPress={() => {
-            setActiveKey(activeKey === 1 ? 2 : 1);
-          }}
-        >
-          切换Provider
-        </Text>
+        <Text onPress={toggle}> {visible ? '销毁' : '创建'} 使用 Portal 组件</Text>
+        <Text onPress={onPress}> 创建 使用 PortalStore 静态调用</Text>
       </View>
-      {visible && <ModalComponent onPress={toggle} text={`component ${activeKey}`} />}
-
-    </PortalProvider>
+      {visible && (
+        <Portal>
+          <Modal onPress={toggle} text="component modal use createPortal" />
+        </Portal>
+      )}
+      <PortalProvider />
+    </>
   );
 }
 
@@ -96,7 +134,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
 });
 
 AppRegistry.registerComponent('example', () => App);

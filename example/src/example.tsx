@@ -6,52 +6,50 @@
  **/
 
 import * as React from 'react';
+
 import { View, Text, StyleSheet } from 'react-native';
 import useToggle from 'react-use/lib/useToggle';
-import { Portal, PortalProvider } from 'react-native-portal-view';
+import { Portal, PortalProvider, PortalStore } from '../lib';
 import Modal from './components/modal';
 
-const ModalComponent = (props: any) => {
-  return (
-    <Portal onDestroy={() => console.log('onDestroy')} onMount={() => console.log('onMount')}>
-      <Modal {...props} />
-    </Portal>
-  );
-};
+// PortalStore.getUpdater('default').setContainer(props => (
+//   <View
+//     {...props}
+//     pointerEvents="box-none"
+//     style={[props.style, StyleSheet.absoluteFill, { backgroundColor: 'pink' }]}
+//   />
+// ));
+PortalStore.getUpdater('default').setContainer(
+  <View pointerEvents="box-none" style={[StyleSheet.absoluteFill, { backgroundColor: 'pink' }]} />,
+);
 
 export default function App() {
   const [visible, toggle] = useToggle(false);
-  const [activeKey, setActiveKey] = React.useState(1);
+  const portalKeyRef = React.useRef<string>();
+
+  const onPress = () => {
+    if (!portalKeyRef.current) {
+      portalKeyRef.current = PortalStore.getUpdater('default').add(
+        <Modal onPress={onPress} text="component modal use PortalStore" />,
+      );
+    } else {
+      PortalStore.getUpdater('default').remove(portalKeyRef.current);
+      portalKeyRef.current = undefined;
+    }
+  };
 
   return (
     <>
       <View style={styles.container}>
-        <Text onPress={toggle}> {visible ? '销毁' : '创建'}</Text>
-        <Text
-          onPress={() => {
-            setActiveKey(activeKey === 1 ? 2 : 1);
-          }}
-        >
-          切换Provider
-        </Text>
+        <Text onPress={toggle}> {visible ? '销毁' : '创建'} 使用 Portal 组件</Text>
+        <Text onPress={onPress}> 创建 使用 PortalStore 静态调用</Text>
       </View>
-      {visible && <ModalComponent onPress={toggle} text={`component ${activeKey}`} />}
-
-      <View style={styles.portalProvider1}>
-        <PortalProvider
-          maybeActive={() => {
-            return activeKey === 1;
-          }}
-        />
-      </View>
-
-      <View style={styles.portalProvider2}>
-        <PortalProvider
-          maybeActive={() => {
-            return activeKey === 2;
-          }}
-        />
-      </View>
+      {visible && (
+        <Portal>
+          <Modal onPress={toggle} text="component modal use createPortal" />
+        </Portal>
+      )}
+      <PortalProvider />
     </>
   );
 }
@@ -61,16 +59,5 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  portalProvider1: {
-    width: 300,
-    height: 300,
-    backgroundColor: 'red',
-  },
-  portalProvider2: {
-    width: 400,
-    height: 400,
-    backgroundColor: 'blue',
   },
 });

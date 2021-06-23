@@ -1011,11 +1011,6 @@
   resolved "https://registry.npmjs.org/@types/js-cookie/-/js-cookie-2.2.6.tgz#f1a1cb35aff47bc5cfb05cb0c441ca91e914c26f"
   integrity sha512-+oY0FDTO2GYKEV0YPvSshGq9t7YozVkgvXLty7zogQNuCxBhT9/3INX9Q7H1aRZ4SUDRXAKlJuA4EA5nTt7SNw==
 
-"@types/lodash@^4.14.162":
-  version "4.14.162"
-  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.162.tgz#65d78c397e0d883f44afbf1f7ba9867022411470"
-  integrity sha1-ZdeMOX4NiD9Er78fe6mGcCJBFHA=
-
 "@types/node@*":
   version "15.12.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.4.tgz#e1cf817d70a1e118e81922c4ff6683ce9d422e26"
@@ -1026,22 +1021,6 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react-native@^0.64.10":
-  version "0.64.10"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.10.tgz#5eb6a72c77ce0f7e6e14b19c61a6bc585975eef5"
-  integrity sha512-3Kb9QM5/WZ6p58yZ7VPbvjvi6Wc/ZkESgJhKso1gKkNuHBe/4WL6586R2JRDiz9Tsxal9lMnbj3fligBVGl8PA==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react@*":
-  version "17.0.11"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.11.tgz#67fcd0ddbf5a0b083a0f94e926c7d63f3b836451"
-  integrity sha512-yFRQbD+whVonItSk7ZzP/L+gPTJVBkL/7shLEF+i9GC/1cV3JmUxEQz6+9ylhUpWSDuqo1N9qEvqS6vTj4USUA==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
-
 "@types/react@^16.9.11":
   version "16.9.13"
   resolved "https://registry.npmjs.org/@types/react/-/react-16.9.13.tgz#b3ea5dd443f4a680599e2abba8cc66f5e1ce0059"
@@ -1049,11 +1028,6 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
-
-"@types/scheduler@*":
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
-  integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
 "@types/yargs-parser@*":
   version "20.2.0"
@@ -1771,7 +1745,7 @@ csstype@^2.2.0:
   resolved "https://registry.npmjs.org/csstype/-/csstype-2.6.7.tgz#20b0024c20b6718f4eda3853a1f5a1cce7f5e4a5"
   integrity sha512-9Mcn9sFbGBAdmimWb2gLVDtFJzeKtDGIr76TUqmjZrw9LFXBMSU70lcs+C0/7fyCd6iBDqmksUcCOUIkisPHsQ==
 
-csstype@^3.0.2, csstype@^3.0.6:
+csstype@^3.0.6:
   version "3.0.8"
   resolved "https://registry.npmjs.org/csstype/-/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
   integrity sha512-jXKhWqXPmlUeoQnF/EhTtTl4C9SnrxSH/jZUih3jmO6lBKr99rP3/+FmrMj4EFpOXzMtXHAZkd3x0E6h6Fgflw==
