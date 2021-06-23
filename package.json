@@ -17,10 +17,6 @@
     "type": "git",
     "url": "https://github.com/liuyunjs/react-native-portal"
   },
-  "dependencies": {
-    "react-use": "^17.2.4",
-    "tslib": "^2.0.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/runtime": "^7.7.2",
