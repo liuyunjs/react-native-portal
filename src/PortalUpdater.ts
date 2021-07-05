@@ -48,9 +48,9 @@ export class PortalUpdater {
   }
 
   render(): React.ReactElement | null {
-    if (!this._portals.length) {
-      return null;
-    }
+    // if (!this._portals.length) {
+    //   return null;
+    // }
     const elements = this._portals.map(portal =>
       React.cloneElement(portal.element, { key: portal.key }),
     );
