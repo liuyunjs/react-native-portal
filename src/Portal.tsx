@@ -6,11 +6,11 @@ import { getCreatePortal } from './createPortal';
 
 type PortalProps = {
   children: React.ReactNode;
-  fabric?: boolean;
+  // fabric?: boolean;
 };
 
-export const Portal: React.FC<PortalProps> = ({ children, fabric }) => {
-  const createPortal = getCreatePortal(fabric);
+export const Portal: React.FC<PortalProps> = ({ children }) => {
+  const createPortal = getCreatePortal();
 
   return createPortal(children, useRootTag());
 };

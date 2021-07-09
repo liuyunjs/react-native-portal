@@ -20,15 +20,17 @@ yarn add react-native-portal-view
 
 ## 组件
 
-### PortalProvider
+[comment]: <> (### PortalProvider)
 
-_提供一个根节点，可以处于组件树种任何位置_
+[comment]: <> (_提供一个根节点，可以处于组件树种任何位置,_)
 
-#### Props
+[comment]: <> (#### Props)
 
-| 名称     | 默认值 |        类型        | 描述                 |
-| -------- | :----: | :----------------: | :------------------- |
-| children |   void    | React.ReactNode | children |
+[comment]: <> (| 名称     | 默认值 |        类型        | 描述                 |)
+
+[comment]: <> (| -------- | :----: | :----------------: | :------------------- |)
+
+[comment]: <> (| children |   void    | React.ReactNode | children |)
 
 
 ### Portal
@@ -40,12 +42,14 @@ _包裹的组件会被渲染到根节点下_
 | 名称     | 默认值 |        类型        | 描述                 |
 | -------- | :----: | :----------------: | :------------------- |
 | children |   void    | React.ReactNode | 子组件 |
+| children |   void    | React.ReactNode | 子组件 |
 
 
-## 工具类
-### PortalStore
+[comment]: <> (## 工具类)
 
-#### getUpdater: (namespace: string) => [PortalUpdater](#portalupdater)
+[comment]: <> (### PortalStore)
+
+### getUpdater: (namespace: string) => [PortalUpdater](#portalupdater)
 返回指定的 PortalUpdater 示例，不存在会创建一个
 
 
@@ -71,10 +75,10 @@ _包裹的组件会被渲染到根节点下_
 ```javascript
 import * as React from 'react';
 import { View, Text, AppRegistry } from 'react-native';
-import { PortalProvider,Portal, PortalStore } from 'react-native-portal-view';
+import { PortalProvider,Portal, getUpdater } from 'react-native-portal-view';
 import useToggle from 'react-use/lib/useToggle';
 
-PortalStore.getUpdater('default').setContainer(props => (
+getUpdater('default').setContainer(props => (
   <View
     {...props}
     pointerEvents="box-none"
@@ -103,11 +107,11 @@ function App() {
 
   const onPress = () => {
     if (!portalKeyRef.current) {
-      portalKeyRef.current = PortalStore.getUpdater('default').add(
+      portalKeyRef.current = getUpdater('default').add(
         <Modal onPress={onPress} text="component modal use PortalStore" />,
       );
     } else {
-      PortalStore.getUpdater('default').remove(portalKeyRef.current);
+      getUpdater('default').remove(portalKeyRef.current);
       portalKeyRef.current = undefined;
     }
   };
@@ -123,7 +127,6 @@ function App() {
           <Modal onPress={toggle} text="component modal use createPortal" />
         </Portal>
       )}
-      <PortalProvider />
     </>
   );
 }

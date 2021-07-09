@@ -12,6 +12,7 @@
     "target": "esnext",
     "resolveJsonModule": true,
     "declaration": true,
+    "skipLibCheck": true,
     "importHelpers": true,
     "outDir": "./lib"
   },

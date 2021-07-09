@@ -1,15 +1,26 @@
 import React from 'react';
 
-export const getCreatePortal = (() => {
-  let createPortal: (children: React.ReactNode, tag: number, key?: string) => React.ReactPortal;
+let defaultFabric = false;
+export const setDefaultFabric = (fabric: boolean) => {
+  defaultFabric = fabric;
+};
 
-  return (fabric?: boolean) => {
-    if (!createPortal) {
-      createPortal = fabric
-        ? require('react-native/Libraries/Renderer/shims/ReactFabric').createPortal
-        : require('react-native/Libraries/Renderer/shims/ReactNative').createPortal;
+export const getCreatePortal = (() => {
+  const cached = new Map<
+    boolean,
+    (children: React.ReactNode, tag: number, key?: string) => React.ReactPortal
+  >();
+
+  return (fabric: boolean = defaultFabric) => {
+    if (cached.has(fabric)) {
+      cached.set(
+        fabric,
+        fabric
+          ? require('react-native/Libraries/Renderer/shims/ReactFabric').createPortal
+          : require('react-native/Libraries/Renderer/shims/ReactNative').createPortal,
+      );
     }
-    return createPortal;
+    return cached.get(fabric)!;
   };
 })();
 

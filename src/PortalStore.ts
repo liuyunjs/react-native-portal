@@ -1,9 +1,20 @@
 import React from 'react';
+import { AppRegistry } from 'react-native';
 import { PortalUpdater } from './PortalUpdater';
+import { PortalProvider } from './PortalProvider';
+import { setDefaultFabric } from './createPortal';
 
 class PortalStore {
-  private readonly _store: Record<string, PortalUpdater> = {};
+  private readonly _store = new Map<string, PortalUpdater>();
   private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null = null;
+
+  constructor() {
+    // @ts-ignore
+    AppRegistry.setWrapperComponentProvider((params: { fabric?: boolean }) => {
+      setDefaultFabric(params.fabric === true);
+      return PortalProvider;
+    });
+  }
 
   init(forceUpdate: React.Dispatch<React.SetStateAction<never[]>>) {
     this._forceUpdate = forceUpdate;
@@ -17,17 +28,14 @@ class PortalStore {
   }
 
   getUpdater(namespace: string) {
-    const cachedUpdater = this._store[namespace];
-    if (cachedUpdater) return cachedUpdater;
+    if (this._store.has(namespace)) return this._store.get(namespace)!;
     const updater = new PortalUpdater();
-    this._store[namespace] = updater;
+    this._store.set(namespace, updater);
     return updater;
   }
 
   forEach(callback: (updater: PortalUpdater, namespace: string) => void) {
-    Object.keys(this._store).forEach(namespace => {
-      callback(this._store[namespace], namespace);
-    });
+    this._store.forEach(callback);
   }
 }
 
