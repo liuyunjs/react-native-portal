@@ -11,6 +11,5 @@ type PortalProps = {
 
 export const Portal: React.FC<PortalProps> = ({ children }) => {
   const createPortal = getCreatePortal();
-
   return createPortal(children, useRootTag());
 };

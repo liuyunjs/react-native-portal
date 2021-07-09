@@ -9,7 +9,7 @@ import * as React from 'react';
 
 import { View, Text, StyleSheet } from 'react-native';
 import useToggle from 'react-use/lib/useToggle';
-import { Portal, PortalProvider, PortalStore } from '../lib';
+import { Portal, getUpdater } from '../lib';
 import Modal from './components/modal';
 
 // PortalStore.getUpdater('default').setContainer(props => (
@@ -19,9 +19,9 @@ import Modal from './components/modal';
 //     style={[props.style, StyleSheet.absoluteFill, { backgroundColor: 'pink' }]}
 //   />
 // ));
-PortalStore.getUpdater('default').setContainer(
-  <View pointerEvents="box-none" style={[StyleSheet.absoluteFill, { backgroundColor: 'pink' }]} />,
-);
+// getUpdater('default').setContainer(
+//   <View pointerEvents="box-none" style={[StyleSheet.absoluteFill, { backgroundColor: 'pink' }]} />,
+// );
 
 export default function App() {
   const [visible, toggle] = useToggle(false);
@@ -29,11 +29,11 @@ export default function App() {
 
   const onPress = () => {
     if (!portalKeyRef.current) {
-      portalKeyRef.current = PortalStore.getUpdater('default').add(
+      portalKeyRef.current = getUpdater('default').add(
         <Modal onPress={onPress} text="component modal use PortalStore" />,
       );
     } else {
-      PortalStore.getUpdater('default').remove(portalKeyRef.current);
+      getUpdater('default').remove(portalKeyRef.current);
       portalKeyRef.current = undefined;
     }
   };
@@ -49,7 +49,7 @@ export default function App() {
           <Modal onPress={toggle} text="component modal use createPortal" />
         </Portal>
       )}
-      <PortalProvider />
+      {/*<PortalProvider />*/}
     </>
   );
 }

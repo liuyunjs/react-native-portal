@@ -12,7 +12,7 @@ export const getCreatePortal = (() => {
   >();
 
   return (fabric: boolean = defaultFabric) => {
-    if (cached.has(fabric)) {
+    if (!cached.has(fabric)) {
       cached.set(
         fabric,
         fabric

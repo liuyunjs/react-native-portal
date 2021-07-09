@@ -1,6 +1,7 @@
 # react-native-portal-view
 
 ## 特性
+
 将组件渲染到组件的其他位置
 实现类似 h5 position：'fixed'效果
 
@@ -26,48 +27,51 @@ yarn add react-native-portal-view
 
 [comment]: <> (#### Props)
 
-[comment]: <> (| 名称     | 默认值 |        类型        | 描述                 |)
+[comment]: <> (| 名称 | 默认值 | 类型 | 描述 |)
 
 [comment]: <> (| -------- | :----: | :----------------: | :------------------- |)
 
-[comment]: <> (| children |   void    | React.ReactNode | children |)
-
+[comment]: <> (| children | void | React.ReactNode | children |)
 
 ### Portal
+
 _包裹的组件会被渲染到根节点下_
- 此组件跟 PortalProvider 无关
+此组件跟 PortalProvider 无关
 
 #### Props
 
-| 名称     | 默认值 |        类型        | 描述                 |
-| -------- | :----: | :----------------: | :------------------- |
-| children |   void    | React.ReactNode | 子组件 |
-| children |   void    | React.ReactNode | 子组件 |
-
+| 名称     | 默认值 |      类型       | 描述   |
+| -------- | :----: | :-------------: | :----- |
+| children |  void  | React.ReactNode | 子组件 |
 
 [comment]: <> (## 工具类)
 
 [comment]: <> (### PortalStore)
 
 ### getUpdater: (namespace: string) => [PortalUpdater](#portalupdater)
+
 返回指定的 PortalUpdater 示例，不存在会创建一个
 
-
 ### PortalUpdater
+
 提供一组方法用于使用函数的方式创建 Portal，添加的组件会渲染到 PortalProvider 中
 使用前要在组件树中添加 PortalProvider
 
 #### setContainer: (componentOrElement: React.ComponentType<any> | React.ReactElement) => void
+
 添加一个容器，例如 react-redux 的 Provider 等;
 所有使用 add 方法添加的组件都会渲染到这个容器中
 
 #### add: (element: React.ReactElement) => string
-添加一个组件，并且返回一个key，这个key用于后续的删除及更新操作
+
+添加一个组件，并且返回一个 key，这个 key 用于后续的删除及更新操作
 
 #### update: (key: string, element: React.ReactElement) => void
+
 更新指定的组件
 
 #### remove: (key: string) => void;
+
 删除指定组件
 
 ## 示例
@@ -141,4 +145,3 @@ const styles = StyleSheet.create({
 
 AppRegistry.registerComponent('example', () => App);
 ```
-
