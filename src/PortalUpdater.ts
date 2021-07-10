@@ -11,6 +11,13 @@ export class PortalUpdater {
   private _portals: PortalElement[] = [];
   private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null = null;
 
+  private _wrap(key: string, element: React.ReactElement) {
+    return React.cloneElement(element, {
+      onRequestClose: () => this.remove(key),
+      // __key: key,
+    });
+  }
+
   init(forceUpdate: React.Dispatch<React.SetStateAction<never[]>>) {
     this._forceUpdate = forceUpdate;
   }
@@ -23,7 +30,7 @@ export class PortalUpdater {
     const portalKey = Math.random().toString(32).slice(2);
     this._portals.push({
       key: portalKey,
-      element,
+      element: this._wrap(portalKey, element),
     });
     if (!this._forceUpdate) {
       PortalStore.forceUpdate();
@@ -36,7 +43,7 @@ export class PortalUpdater {
 
   update(key: string, element: React.ReactElement) {
     this._portals = this._portals.map(portalElement => {
-      if (portalElement.key === key) return { key, element };
+      if (portalElement.key === key) return { key, element: this._wrap(key, element) };
       return portalElement;
     });
     this._forceUpdate!([]);
