@@ -35,8 +35,7 @@ yarn add react-native-portal-view
 
 ### Portal
 
-_包裹的组件会被渲染到根节点下_
-此组件跟 PortalProvider 无关
+包裹的组件会被渲染到根节点下
 
 #### Props
 
