@@ -26,7 +26,6 @@ import Modal from './components/modal';
 export default function App() {
   const [visible, toggle] = useToggle(false);
   const portalKeyRef = React.useRef<string>();
-
   const onPress = () => {
     if (!portalKeyRef.current) {
       portalKeyRef.current = getUpdater('default').add(
@@ -35,8 +34,13 @@ export default function App() {
     } else {
       getUpdater('default').remove(portalKeyRef.current);
       portalKeyRef.current = undefined;
+      // if (visible) {
+      //   toggle(false);
+      // }
     }
   };
+
+  console.log('portalKeyRef', visible, portalKeyRef.current);
 
   return (
     <>
@@ -45,7 +49,7 @@ export default function App() {
         <Text onPress={onPress}> 创建 使用 PortalStore 静态调用</Text>
       </View>
       {visible && (
-        <Portal>
+        <Portal legacy namespace="default" override={portalKeyRef}>
           <Modal onPress={toggle} text="component modal use createPortal" />
         </Portal>
       )}

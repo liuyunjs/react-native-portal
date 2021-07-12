@@ -8,13 +8,13 @@ type PortalElement = {
 
 export class PortalUpdater {
   private _container?: React.ComponentType<any> | React.ReactElement;
-  private _portals: PortalElement[] = [];
+  private _portals: React.ReactElement[] = [];
   private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null = null;
 
   private _wrap(key: string, element: React.ReactElement) {
     return React.cloneElement(element, {
-      onRequestClose: () => this.remove(key),
-      // __key: key,
+      onRequestClose: element.props.onRequestClose || (() => this.remove(key)),
+      key,
     });
   }
 
@@ -28,10 +28,7 @@ export class PortalUpdater {
 
   add(element: React.ReactElement) {
     const portalKey = Math.random().toString(32).slice(2);
-    this._portals.push({
-      key: portalKey,
-      element: this._wrap(portalKey, element),
-    });
+    this._portals.push(this._wrap(portalKey, element));
     if (!this._forceUpdate) {
       PortalStore.forceUpdate();
     } else {
@@ -43,7 +40,7 @@ export class PortalUpdater {
 
   update(key: string, element: React.ReactElement) {
     this._portals = this._portals.map(portalElement => {
-      if (portalElement.key === key) return { key, element: this._wrap(key, element) };
+      if (portalElement.key === key) return this._wrap(key, element);
       return portalElement;
     });
     this._forceUpdate!([]);
@@ -58,9 +55,7 @@ export class PortalUpdater {
     // if (!this._portals.length) {
     //   return null;
     // }
-    const elements = this._portals.map(portal =>
-      React.cloneElement(portal.element, { key: portal.key }),
-    );
+    const elements = this._portals;
     if (!this._container) {
       return (elements as unknown) as React.ReactElement;
     }
