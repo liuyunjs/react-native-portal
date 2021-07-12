@@ -1,11 +1,6 @@
 import React from 'react';
 import PortalStore from './PortalStore';
 
-type PortalElement = {
-  key: string;
-  element: React.ReactElement;
-};
-
 export class PortalUpdater {
   private _container?: React.ComponentType<any> | React.ReactElement;
   private _portals: React.ReactElement[] = [];
