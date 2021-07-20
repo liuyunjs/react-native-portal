@@ -11,7 +11,7 @@
   "dependencies": {
     "invariant": "^2.2.4",
     "react": "16.9.0",
-    "react-native": "0.61.4",
+    "react-native": "0.62.3",
     "react-native-portal-view": "^1.0.0-beta3",
     "react-use": "^13.12.2",
     "react-use-callback": "^0.0.3"
