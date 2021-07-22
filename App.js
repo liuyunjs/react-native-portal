@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import { AnimatePresence, RMotionView } from 'rmotion';
-import { LegacyPortal, PortalStore } from './library/main';
+import { Portal, PortalStore } from './library/main';
 
 PortalStore.getUpdater().setContainer(AnimatePresence);
 
@@ -10,7 +10,7 @@ export default function App() {
   return (
     <SafeAreaView>
       <Text onPress={() => setV(true)}>Show Portal</Text>
-      <LegacyPortal>
+      <Portal>
         {v && (
           <RMotionView
             style={{ height: 300, backgroundColor: 'red' }}
@@ -20,7 +20,7 @@ export default function App() {
             <Text onPress={() => setV(false)}>Close Portal</Text>
           </RMotionView>
         )}
-      </LegacyPortal>
+      </Portal>
     </SafeAreaView>
   );
 }

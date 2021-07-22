@@ -43,13 +43,15 @@ yarn add react-native-portal-view
 | -------- | :----: | :-------------: | :----- |
 | children |  void  | React.ReactNode | 子组件 |
 
-[comment]: <> (## 工具类)
 
-[comment]: <> (### PortalStore)
 
-### getUpdater: (namespace: string) => [PortalUpdater](#portalupdater)
+### PortalStore
 
+#### getUpdater: (namespace?: string) => [PortalUpdater](#portalupdater)
 返回指定的 PortalUpdater 示例，不存在会创建一个
+
+#### setContainer: (componentOrElement: React.ComponentType | React.ReactElement) => void
+设置一个容器，比如 react-redux 的 Provider，这样 Portal 渲染的内容也能访问 store 的数据
 
 ### PortalUpdater
 
