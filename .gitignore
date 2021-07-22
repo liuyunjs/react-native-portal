@@ -59,10 +59,3 @@ buck-out/
 /ios/Pods/
 
 dist/
-tmp/
-lib/
-types/
-
-example/node_modules
-example/src/createPortal.tsx
-example/src/index.tsx
