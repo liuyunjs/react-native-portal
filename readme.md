@@ -9,13 +9,13 @@
 
 > npm
 
-```
+```shell
 npm i react-native-portal-view -S
 ```
 
 > yarn
 
-```
+```shell
 yarn add react-native-portal-view
 ```
 
