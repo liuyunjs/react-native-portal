@@ -1,20 +1,22 @@
 import React from 'react';
-import PortalStore from './PortalStore';
+import DefaultStore, { PortalStore } from './PortalStore';
 
 export type LegacyPortalProps = {
   namespace?: string;
   children: React.ReactElement;
   override?: { current?: string };
+  store?: PortalStore;
 };
 
 export const LegacyPortal: React.FC<LegacyPortalProps> = ({
   namespace = '',
   override,
   children,
+  store = DefaultStore,
 }) => {
   const overrideCurr = override?.current;
   const portalKeyRef = React.useRef(overrideCurr);
-  const updater = PortalStore.getUpdater(namespace);
+  const updater = store.getUpdater(namespace);
 
   const remove = () => {
     if (portalKeyRef.current) {
@@ -40,8 +42,10 @@ export const LegacyPortal: React.FC<LegacyPortalProps> = ({
     } else {
       remove();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useLayoutEffect(() => remove, []);
 
   return null;

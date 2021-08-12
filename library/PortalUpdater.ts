@@ -1,10 +1,13 @@
 import React from 'react';
-import PortalStore from './PortalStore';
+import { PortalStore } from './PortalStore';
 
 export class PortalUpdater {
   private _container?: React.ComponentType<any> | React.ReactElement;
   private _portals: React.ReactElement[] = [];
-  private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null = null;
+  private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null =
+    null;
+
+  constructor(private readonly _store: PortalStore) {}
 
   private _wrap(key: string, element: React.ReactElement) {
     return React.cloneElement(element, {
@@ -17,7 +20,9 @@ export class PortalUpdater {
     this._forceUpdate = forceUpdate;
   }
 
-  setContainer(componentOrElement: React.ComponentType<any> | React.ReactElement) {
+  setContainer(
+    componentOrElement: React.ComponentType<any> | React.ReactElement,
+  ) {
     this._container = componentOrElement;
   }
 
@@ -25,7 +30,7 @@ export class PortalUpdater {
     const portalKey = Math.random().toString(32).slice(2);
     this._portals.push(this._wrap(portalKey, element));
     if (!this._forceUpdate) {
-      PortalStore.forceUpdate();
+      this._store.forceUpdate();
     } else {
       this._forceUpdate!([]);
     }
@@ -34,7 +39,7 @@ export class PortalUpdater {
   }
 
   update(key: string, element: React.ReactElement) {
-    this._portals = this._portals.map(portalElement => {
+    this._portals = this._portals.map((portalElement) => {
       if (portalElement.key === key) return this._wrap(key, element);
       return portalElement;
     });
@@ -42,7 +47,9 @@ export class PortalUpdater {
   }
 
   remove(key: string) {
-    this._portals = this._portals.filter(portalElement => portalElement.key !== key);
+    this._portals = this._portals.filter(
+      (portalElement) => portalElement.key !== key,
+    );
     this._forceUpdate!([]);
   }
 
@@ -52,7 +59,7 @@ export class PortalUpdater {
     // }
     const elements = this._portals;
     if (!this._container) {
-      return (elements as unknown) as React.ReactElement;
+      return elements as unknown as React.ReactElement;
     }
     if (React.isValidElement(this._container)) {
       return React.cloneElement(this._container, {}, elements);

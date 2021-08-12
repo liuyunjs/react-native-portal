@@ -4,7 +4,7 @@ import { PortalUpdater } from './PortalUpdater';
 import { PortalProvider } from './PortalProvider';
 import { setDefaultFabric } from './createPortal';
 
-class PortalStore {
+export class PortalStore {
   private readonly _store = new Map<string, PortalUpdater>();
   private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null =
     null;
@@ -45,7 +45,7 @@ class PortalStore {
 
   getUpdater(namespace: string = '') {
     if (this._store.has(namespace)) return this._store.get(namespace)!;
-    const updater = new PortalUpdater();
+    const updater = new PortalUpdater(this);
     this._store.set(namespace, updater);
     return updater;
   }
