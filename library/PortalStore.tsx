@@ -2,7 +2,6 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 import { PortalUpdater } from './PortalUpdater';
 import { PortalProvider } from './PortalProvider';
-import { setDefaultFabric } from './createPortal';
 
 export class PortalStore {
   private readonly _store = new Map<string, PortalUpdater>();
@@ -12,8 +11,7 @@ export class PortalStore {
 
   constructor() {
     // @ts-ignore
-    AppRegistry.setWrapperComponentProvider((params: { fabric?: boolean }) => {
-      setDefaultFabric(params.fabric === true);
+    AppRegistry.setWrapperComponentProvider(() => {
       const container = this._container;
       if (!container) return PortalProvider;
 
@@ -55,4 +53,9 @@ export class PortalStore {
   }
 }
 
-export default new PortalStore();
+const DefaultStore = new PortalStore();
+export default DefaultStore;
+
+PortalProvider.defaultProps = {
+  store: DefaultStore,
+};

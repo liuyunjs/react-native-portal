@@ -1,15 +1,15 @@
 import React from 'react';
 import { PortalPatcher } from './PortalPatcher';
-import DefaultStore, { PortalStore } from './PortalStore';
+import { PortalStore } from './PortalStore';
 
 export const PortalProvider: React.FC<{ store?: PortalStore }> = ({
   children,
-  store = DefaultStore,
+  store,
 }) => {
   return (
     <>
       {children}
-      <PortalPatcher store={store} />
+      <PortalPatcher store={store!} />
     </>
   );
 };

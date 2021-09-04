@@ -1,7 +1,5 @@
 import PortalStore from './PortalStore';
-export * from './useRootTag';
-export * from './createPortal';
-export * from './LegacyPortal';
+export * from './Portal';
 
 export { PortalProvider } from './PortalProvider';
 export * from './Portal';
