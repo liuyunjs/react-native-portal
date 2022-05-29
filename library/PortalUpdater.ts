@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { PortalStore } from './PortalStore';
 
 export class PortalUpdater {
@@ -54,9 +54,6 @@ export class PortalUpdater {
   }
 
   render(): React.ReactElement | null {
-    // if (!this._portals.length) {
-    //   return null;
-    // }
     const elements = this._portals;
     if (!this._container) {
       return elements as unknown as React.ReactElement;

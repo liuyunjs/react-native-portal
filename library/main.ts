@@ -1,9 +1,18 @@
-import PortalStore from './PortalStore';
-export * from './Portal';
+import { PortalStore, DefaultStore } from './PortalStore';
+import { Portal } from './Portal';
+import { PortalProvider } from './PortalProvider';
+import { autoInjectProvider } from './autoInjectProvider';
 
-export { PortalProvider } from './PortalProvider';
-export * from './Portal';
+export {
+  PortalStore,
+  DefaultStore,
+  Portal,
+  PortalProvider,
+  autoInjectProvider,
+};
 
-export const getUpdater = (namespace?: string) =>
-  PortalStore.getUpdater(namespace);
-export { PortalStore };
+autoInjectProvider();
+
+PortalProvider.defaultProps = Portal.defaultProps = {
+  store: DefaultStore,
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { PortalUpdater } from './PortalUpdater';
 
 export const PortalRender = React.memo<{ updater: PortalUpdater }>(

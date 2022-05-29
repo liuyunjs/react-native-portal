@@ -1,30 +1,24 @@
-import React from 'react';
-import DefaultStore, { PortalStore } from './PortalStore';
+import * as React from 'react';
+import { PortalStore } from './PortalStore';
 
 export type PortalProps = {
   namespace?: string;
-  children: React.ReactElement;
-  override?: { current?: string };
+  children: React.ReactNode;
   store?: PortalStore;
 };
 
 export const Portal: React.FC<PortalProps> = ({
   namespace,
-  override,
   children,
   store,
 }) => {
-  const overrideCurr = override?.current;
-  const portalKeyRef = React.useRef(overrideCurr);
+  const portalKeyRef = React.useRef<string>();
   const updater = store!.getUpdater(namespace);
 
   const remove = () => {
     if (portalKeyRef.current) {
       updater.remove(portalKeyRef.current);
 
-      if (overrideCurr && overrideCurr === portalKeyRef.current) {
-        override!.current = undefined;
-      }
       portalKeyRef.current = undefined;
     }
   };
@@ -32,12 +26,9 @@ export const Portal: React.FC<PortalProps> = ({
   React.useLayoutEffect(() => {
     if (React.Children.toArray(children).length) {
       if (portalKeyRef.current) {
-        updater.update(portalKeyRef.current, children);
+        updater.update(portalKeyRef.current, children as React.ReactElement);
       } else {
-        portalKeyRef.current = updater.add(children);
-        if (override) {
-          override.current = portalKeyRef.current;
-        }
+        portalKeyRef.current = updater.add(children as React.ReactElement);
       }
     } else {
       remove();
@@ -49,9 +40,4 @@ export const Portal: React.FC<PortalProps> = ({
   React.useLayoutEffect(() => remove, []);
 
   return null;
-};
-
-Portal.defaultProps = {
-  store: DefaultStore,
-  namespace: '',
 };

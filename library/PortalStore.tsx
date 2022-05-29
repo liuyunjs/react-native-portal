@@ -1,37 +1,13 @@
-import React from 'react';
-import { AppRegistry } from 'react-native';
+import * as React from 'react';
 import { PortalUpdater } from './PortalUpdater';
-import { PortalProvider } from './PortalProvider';
 
 export class PortalStore {
   private readonly _store = new Map<string, PortalUpdater>();
   private _forceUpdate: React.Dispatch<React.SetStateAction<never[]>> | null =
     null;
-  private _container?: React.ComponentType<any> | React.ReactElement;
-
-  constructor() {
-    // @ts-ignore
-    AppRegistry.setWrapperComponentProvider(() => {
-      const container = this._container;
-      if (!container) return PortalProvider;
-
-      return function PortalCustomContainer(props: any) {
-        const elem = React.createElement(PortalProvider, props);
-        const creator = React.isValidElement(container)
-          ? React.cloneElement
-          : React.createElement;
-        // @ts-ignore
-        return creator(container, props, elem);
-      };
-    });
-  }
 
   init(forceUpdate: React.Dispatch<React.SetStateAction<never[]>>) {
     this._forceUpdate = forceUpdate;
-  }
-
-  setContainer(container: React.ComponentType<any> | React.ReactElement) {
-    this._container = container;
   }
 
   forceUpdate() {
@@ -53,9 +29,4 @@ export class PortalStore {
   }
 }
 
-const DefaultStore = new PortalStore();
-export default DefaultStore;
-
-PortalProvider.defaultProps = {
-  store: DefaultStore,
-};
+export const DefaultStore = new PortalStore();
