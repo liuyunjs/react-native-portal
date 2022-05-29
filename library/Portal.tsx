@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { PortalStore } from './PortalStore';
-
+import { PortalStoreContext } from './PortalStoreContext';
 export type PortalProps = {
   namespace?: string;
   children: React.ReactNode;
-  store?: PortalStore;
 };
 
-export const Portal: React.FC<PortalProps> = ({
-  namespace,
-  children,
-  store,
-}) => {
+export const Portal: React.FC<PortalProps> = ({ namespace, children }) => {
+  const store = React.useContext(PortalStoreContext);
+
+  if (store == null) throw new Error('Portal 外层必须存在 PortalProvider');
+
   const portalKeyRef = React.useRef<string>();
   const updater = store!.getUpdater(namespace);
 
@@ -24,11 +22,19 @@ export const Portal: React.FC<PortalProps> = ({
   };
 
   React.useLayoutEffect(() => {
-    if (React.Children.toArray(children).length) {
+    const childrenLength = React.Children.toArray(children).length;
+
+    if (childrenLength) {
+      const child =
+        childrenLength > 1 || Object(children) !== children ? (
+          <>{children}</>
+        ) : (
+          children
+        );
       if (portalKeyRef.current) {
-        updater.update(portalKeyRef.current, children as React.ReactElement);
+        updater.update(portalKeyRef.current, child as React.ReactElement);
       } else {
-        portalKeyRef.current = updater.add(children as React.ReactElement);
+        portalKeyRef.current = updater.add(child as React.ReactElement);
       }
     } else {
       remove();

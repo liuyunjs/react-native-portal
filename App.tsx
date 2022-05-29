@@ -8,7 +8,9 @@ import {
   DefaultStore,
 } from './library/main';
 const store = new PortalStore();
+
 DefaultStore.getUpdater().setContainer(AnimatePresence);
+
 let index = 0;
 export default function App() {
   const [list, setList] = React.useState<number[]>([]);

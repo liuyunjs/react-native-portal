@@ -972,10 +972,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@liuyunjs/hooks@^1.1.0-beta1":
-  version "1.1.0-beta2"
-  resolved "https://registry.yarnpkg.com/@liuyunjs/hooks/-/hooks-1.1.0-beta2.tgz#b1111c9bee1b5dc51ce728bf03bb45143615ca06"
-  integrity sha512-ofImWCP5vCS3U0aMcSQK3VCV9XRdp1qShd8vuZoUeycDEXDD/R1g17A2iXHWUrbvi3s09HwiBfvw6ATTh0c08g==
+"@liuyunjs/hooks@^1":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@liuyunjs/hooks/-/hooks-1.1.5.tgz#828ac6d08870b6a4f2053f587503ddc808b3c47d"
+  integrity sha512-6dX8Zq/xwDmZ9EldARqlvNt/gW8CYkbNef3QcyBVf+8lR0AIdo8+n9eTFj9cBBhJUhboNywLfqcUwbyOoGwMBA==
   dependencies:
     "@liuyunjs/timer" "^1.0.0-beta3"
     "@liuyunjs/utils" "^1.0.0"
@@ -989,6 +989,21 @@
   integrity sha512-q65EKrJ+2ZL36+sJnisnlq7eoy+zfljY7KcFsnoV17BO7dS2oNWfY7pzS+NyOQbZc1X+VIF2TEpZQr8luHzFrg==
   dependencies:
     react-will-mount-hook "^1.0.1"
+
+"@liuyunjs/timer@^1.0.0-beta4":
+  version "1.0.0-beta4"
+  resolved "https://registry.yarnpkg.com/@liuyunjs/timer/-/timer-1.0.0-beta4.tgz#c82482aa500b37c61b2eca3a90d9e6dcfcbe5b12"
+  integrity sha512-VjYLOPM5uU9J1UkR5uuwut+uc1RGyGtsZi1k3TVDPHuFrWpfzoKEr1JjXlmAmDyCGtv5mI5bcW/EGL2th/addg==
+  dependencies:
+    react-will-mount-hook "^1.0.1"
+
+"@liuyunjs/utils@^1":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@liuyunjs/utils/-/utils-1.2.5.tgz#837a9fe455aba086d92600ba4f1ae98358704148"
+  integrity sha512-XgPG3LTORT8AKaFi0Efm2HTr7YkEWXQZyxH9gF3tcA0t25fjOViggzEDVBD7Fuz/Al5sE+fd7y5X+2Hp1XLSvg==
+  dependencies:
+    "@liuyunjs/timer" "^1.0.0-beta4"
+    ts-toolbelt "^9.6.0"
 
 "@liuyunjs/utils@^1.0.0":
   version "1.0.0"
@@ -1259,7 +1274,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/hoist-non-react-statics@^3.3.0":
+"@types/hoist-non-react-statics@^3.3.0", "@types/hoist-non-react-statics@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
   integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
@@ -3312,7 +3327,7 @@ hey-listen@^1.0.8:
   resolved "https://registry.yarnpkg.com/hey-listen/-/hey-listen-1.0.8.tgz#8e59561ff724908de1aa924ed6ecc84a56a9aa68"
   integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
 
-hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@*, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -5870,15 +5885,16 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rmotion@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/rmotion/-/rmotion-0.0.4.tgz#61d8643687b51dbb39cdaad8ef3089aa7cf2c492"
-  integrity sha512-X0rAHlEmSD5mKU3KSIg6HDpSSk9JJCjtOwjJdnz7D1+ILfnIDRYwCaZBdeHEBhGtgTR6mYL3M4cVDy+jh2Z9ew==
+rmotion@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rmotion/-/rmotion-2.0.0.tgz#c21263cb7192e29b67ceae44b0d3512fa68904a2"
+  integrity sha512-9vyPfL8NAm4+ic9zTrUEfTuYiiRUyDgR+cufEXf0WLGe4pgjufqSloomihnI3i1tAMQXHIjh+UG+3SywuDjkYw==
   dependencies:
-    "@liuyunjs/hooks" "^1.1.0-beta1"
-    "@liuyunjs/utils" "^1.0.0"
+    "@liuyunjs/hooks" "^1"
+    "@liuyunjs/utils" "^1"
+    "@types/hoist-non-react-statics" "^3.3.1"
     framer-motion "^4.1.17"
-    hoist-non-react-statics "^3.3.2"
+    hoist-non-react-statics "*"
 
 rollup-plugin-typescript2@^0.31.2:
   version "0.31.2"
@@ -6554,6 +6570,11 @@ tr46@^2.1.0:
   integrity sha512-15Ih7phfcdP5YxqiB+iDtLoaTz4Nd35+IiAv0kQ5FNKHzXgdWqPoTIqEDDJmXceQt4JZk6lVPT8lnDlPpGDppw==
   dependencies:
     punycode "^2.1.1"
+
+ts-toolbelt@^9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-9.6.0.tgz#50a25426cfed500d4a09bd1b3afb6f28879edfd5"
+  integrity sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==
 
 tslib@^1.8.1:
   version "1.14.1"

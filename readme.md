@@ -21,17 +21,18 @@ yarn add react-native-portal-view
 
 ## 组件
 
-[comment]: <> (### PortalProvider)
+### PortalProvider
 
-[comment]: <> (_提供一个根节点，可以处于组件树种任何位置,_)
+_提供一个根节点，可以处于组件树种任何位置,_
 
-[comment]: <> (#### Props)
+#### Props
 
-[comment]: <> (| 名称 | 默认值 | 类型 | 描述 |)
+| 名称 | 默认值 | 类型 | 描述 |
 
-[comment]: <> (| -------- | :----: | :----------------: | :------------------- |)
+| -------- | :----: | :----------------: | :------------------- |
 
-[comment]: <> (| children | void | React.ReactNode | children |)
+| children | void | React.ReactNode | children |
+| store | DefaultStore | PortalStore | PortalStore 存储了所有的 PortalUpdater |
 
 ### Portal
 
@@ -42,6 +43,7 @@ yarn add react-native-portal-view
 | 名称     | 默认值 |      类型       | 描述   |
 | -------- | :----: | :-------------: | :----- |
 | children |  void  | React.ReactNode | 子组件 |
+| namespace |  ''  | string | 命名空间 |
 
 
 
@@ -50,8 +52,6 @@ yarn add react-native-portal-view
 #### getUpdater: (namespace?: string) => [PortalUpdater](#portalupdater)
 返回指定的 PortalUpdater 示例，不存在会创建一个
 
-#### setContainer: (componentOrElement: React.ComponentType | React.ReactElement) => void
-设置一个容器，比如 react-redux 的 Provider，这样 Portal 渲染的内容也能访问 store 的数据
 
 ### PortalUpdater
 
@@ -80,10 +80,10 @@ yarn add react-native-portal-view
 ```javascript
 import * as React from 'react';
 import { View, Text, AppRegistry } from 'react-native';
-import { PortalProvider,Portal, getUpdater } from 'react-native-portal-view';
+import { PortalProvider,Portal, DefaultStore } from 'react-native-portal-view';
 import useToggle from 'react-use/lib/useToggle';
 
-getUpdater('default').setContainer(props => (
+DefaultStore.getUpdater('default').setContainer(props => (
   <View
     {...props}
     pointerEvents="box-none"
@@ -112,11 +112,11 @@ function App() {
 
   const onPress = () => {
     if (!portalKeyRef.current) {
-      portalKeyRef.current = getUpdater('default').add(
+      portalKeyRef.current = DefaultStore.getUpdater('default').add(
         <Modal onPress={onPress} text="component modal use PortalStore" />,
       );
     } else {
-      getUpdater('default').remove(portalKeyRef.current);
+        DefaultStore.getUpdater('default').remove(portalKeyRef.current);
       portalKeyRef.current = undefined;
     }
   };

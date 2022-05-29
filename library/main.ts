@@ -12,7 +12,3 @@ export {
 };
 
 autoInjectProvider();
-
-PortalProvider.defaultProps = Portal.defaultProps = {
-  store: DefaultStore,
-};
