@@ -1,11 +1,11 @@
 {
   "name": "react-native-portal-view",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "scripts": {
     "build": "rimraf ./dist; rollup -c rollup.config.js",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "rollup -c rollup.config.js"
   },
   "keywords": [
     "react-native",

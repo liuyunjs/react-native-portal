@@ -1,17 +1,46 @@
 import * as React from 'react';
+import { PortalStore } from './PortalStore';
 import { PortalStoreContext } from './PortalStoreContext';
+
 export type PortalProps = {
   namespace?: string;
-  children: React.ReactNode;
-};
+  children?: React.ReactNode;
+} & (
+  | {
+      useContextStore: false;
+      store: PortalStore;
+    }
+  | {
+      useContextStore?: true;
+      store: undefined;
+    }
+);
 
-export const Portal: React.FC<PortalProps> = ({ namespace, children }) => {
-  const store = React.useContext(PortalStoreContext);
+export const Portal: React.FC<PortalProps> = ({
+  namespace,
+  children,
+  useContextStore,
+  store: storeProp,
+}) => {
+  const storeContext = React.useContext(PortalStoreContext);
 
-  if (store == null) throw new Error('Portal 外层必须存在 PortalProvider');
+  let store: PortalStore;
+  if (useContextStore) {
+    if (storeContext == null) {
+      throw new Error('Portal 外层必须存在 PortalProvider');
+    }
+    store = storeContext!;
+  } else {
+    if (storeProp == null) {
+      throw new Error('"useContextStore" 为 false 时，"store" prop 必传');
+    }
+    store = storeProp!;
+  }
+
+  // if (store == null) throw new Error('Portal 外层必须存在 PortalProvider');
 
   const portalKeyRef = React.useRef<string>();
-  const updater = store!.getUpdater(namespace);
+  const updater = store.getUpdater(namespace);
 
   const remove = () => {
     if (portalKeyRef.current) {
