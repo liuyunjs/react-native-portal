@@ -7,37 +7,35 @@ export type PortalProps = {
   children?: React.ReactNode;
 } & (
   | {
-      useContextStore: false;
+      useCustomStore: true;
       store: PortalStore;
     }
   | {
-      useContextStore?: true;
-      store: undefined;
+      useCustomStore?: false;
+      store?: undefined;
     }
 );
 
 export const Portal: React.FC<PortalProps> = ({
   namespace,
   children,
-  useContextStore,
+  useCustomStore,
   store: storeProp,
 }) => {
   const storeContext = React.useContext(PortalStoreContext);
 
   let store: PortalStore;
-  if (useContextStore) {
+  if (!useCustomStore) {
     if (storeContext == null) {
       throw new Error('Portal 外层必须存在 PortalProvider');
     }
     store = storeContext!;
   } else {
     if (storeProp == null) {
-      throw new Error('"useContextStore" 为 false 时，"store" prop 必传');
+      throw new Error('"useCustomStore" 为 true 时，"store" prop 必传');
     }
     store = storeProp!;
   }
-
-  // if (store == null) throw new Error('Portal 外层必须存在 PortalProvider');
 
   const portalKeyRef = React.useRef<string>();
   const updater = store.getUpdater(namespace);
