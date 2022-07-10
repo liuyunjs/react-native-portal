@@ -12,6 +12,7 @@ export class PortalUpdater {
   private _wrap(key: string, element: React.ReactElement) {
     return React.cloneElement(element, {
       onRequestClose: element.props.onRequestClose || (() => this.remove(key)),
+      portalKey: key,
       key,
     });
   }

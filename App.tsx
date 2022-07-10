@@ -20,7 +20,7 @@ export default function App() {
     <SafeAreaView>
       <PortalProvider store={store}>
         {list.map((item) => (
-          <Portal store={store} key={item}>
+          <Portal useCustomStore store={store} key={item}>
             <Text
               onPress={() => {
                 setList(list.filter((i) => i !== item));
